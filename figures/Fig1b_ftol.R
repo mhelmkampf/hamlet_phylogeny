@@ -10,12 +10,14 @@ library(treeio)
 library(ggtree)
 library(tidyverse)
 
+# Set path to root directory of git repository "hamlet_phylogeny"
+
 dev.off()
 rm(list=ls())
 
 
 ### Read in and root tree
-phylo <- read.tree(paste("../data/trees/ftol_v2.treefile"))
+phylo <- read.tree(paste("results/trees/ftol_v2.treefile"))
 
 
 ### Root tree
@@ -140,7 +142,7 @@ clr_neutral <- rgb(0.2, 0.2, 0.2)
 
 ### Save to file
 ggsave(plot = t,
-       filename = "Fig1b_ftol.pdf",
+       filename = "figures/Fig1b_ftol.pdf",
        width = 8,
        height = 6,
        device = cairo_pdf,

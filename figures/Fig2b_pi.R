@@ -10,6 +10,8 @@ library(matrixStats)
 library(ggpattern)
 library(cowplot)
 
+# Set path to root directory of git repository "hamlet_phylogeny"
+
 rm(list=ls())
 dev.off()
 
@@ -21,7 +23,7 @@ lgs <- paste0("LG", sprintf('%0.2d', 1:24))
 
 
 ### Declare populations
-set <- read_tsv("../data/samples/samples_phylo.txt", col_names = "Sample") %>%
+set <- read_tsv("metadata/samples_phylo.txt", col_names = "Sample") %>%
   mutate(Population = str_sub(Sample, -6, -1))
 # set <- set %>% filter(!grepl("tor|tab|tig", Population))   # execute if outgroups were removed
 
@@ -38,7 +40,7 @@ atlantic <- c("bar", "hai", "pri")
 df <- data.frame(0)
 
 for (region in lgs) {
-  pi <- as.numeric(read_lines(file = paste0("../data/pi/pi_", ds, "_", region, "_", level, "_n1.txt")))
+  pi <- as.numeric(read_lines(file = paste0("results/pi/pi_", ds, "_", region, "_", level, "_n1.txt")))
   df <- cbind(df, pi)
 }
 
@@ -120,7 +122,7 @@ nucdiv <- as_tibble(df) %>%
 
 
 ### Set species colors
-colstandard <- read_tsv("../data/samples/species_colors.tsv", 
+colstandard <- read_tsv("metadata/species_colors.tsv", 
                         col_types = "cc", 
                         col_names = TRUE)
 
@@ -166,7 +168,7 @@ scol <- nucdiv %>%
 
 ### Save plot
 ggsave(
-  filename = paste0("Fig2b_pi.png"),
+  filename = paste0("figures/Fig2b_pi.png"),
   plot = p_comb,
   width = 20,
   height = 10,

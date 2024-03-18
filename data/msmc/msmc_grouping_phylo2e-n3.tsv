@@ -1,0 +1,82 @@
+msmc_run	spec	geo	group_nr	group_size	samples
+1	abe	arc	1	3	62550abearc, 62552abearc, 62551abearc
+2	abe	bel	1	4	18492abebel, 18493abebel, 18263abebel, PL17_88abebel
+3	abe	boc	1	3	18471abeboc, 18452abeboc, 28389abeboc
+4	abe	gun	1	3	19708abegun, 18949abegun, 19546abegun
+5	abe	hon	1	4	20864abehon, 20425abehon, 20861abehon, 20862abehon
+6	abe	hon	2	4	20866abehon, 20762abehon, 20644abehon, 20433abehon
+7	abe	hon	3	3	20761abehon, 20759abehon, 20867abehon
+8	aff	boc	1	4	23322affboc, 18986affboc, 18936affboc, 18935affboc
+9	aff	gun	1	3	19519affgun, 19174affgun, 19294affgun
+10	atl	liz	1	4	54689atlliz, 54849atlliz, 54761atlliz, 54786atlliz
+11	atl	tam	1	4	52989atltam, 52990atltam, 52988atltam, 27936atltam
+12	chl	bar	1	3	19435chlbar, 19416chlbar, 19425chlbar
+13	chl	pri	1	4	PL17_44chlpri, PL17_41chlpri, PL17_37chlpri, PL17_42chlpri
+14	chl	pri	2	4	PL17_39chlpri, PL17_43chlpri, PL17_38chlpri, PL17_86chlpri
+15	chl	pri	3	3	PL17_62chlpri, FL0331chlpri, PL17_40chlpri
+16	eco	arc	1	3	62556ecoarc, 62576ecoarc, 62549ecoarc
+17	esp	arc	1	3	62571esparc, 62555esparc, 62585esparc
+18	flo	arc	1	3	62560floarc, 62558floarc, 62559floarc
+19	gem	arc	1	3	62570gemarc, 62515gemarc, 62553gemarc
+20	gem	flk	1	3	PL17_153gemflk, PL17_145gemflk, PL17_142gemflk
+21	gum	boc	1	3	28366gumboc, 18449gumboc, 23301gumboc
+22	gum	hon	1	4	20641gumhon, 20427gumhon, 20426gumhon, 20617gumhon
+23	gum	hon	2	4	20420gumhon, 20428gumhon, 20615gumhon, 20418gumhon
+24	gum	hon	3	3	20642gumhon, 20643gumhon, 20419gumhon
+25	gut	bel	1	3	20069gutbel, 18160gutbel, 20068gutbel
+26	ind	bel	1	4	17999indbel, 17996indbel, 17997indbel, PL17_98indbel
+27	ind	bel	2	4	18227indbel, 17998indbel, PL17_111indbel, 18225indbel
+28	ind	bel	3	4	18222indbel, 18226indbel, 18195indbel, 18000indbel
+29	ind	gun	1	3	19190indgun, 19124indgun, 19162indgun
+30	ind	pri	1	4	PL17_85indpri, PL17_35indpri, FL0318indpri, PL17_64indpri
+31	lib	hai	1	3	HypoHaiti1libhai, HypoHaiti2libhai, HypoHaiti3libhai
+32	may	bel	1	4	PL17_101maybel, PL17_126maybel, PL17_95maybel, PL17_124maybel
+33	may	bel	2	4	PL17_120maybel, PL17_89maybel, PL17_123maybel, PL17_119maybel
+34	nig	bel	1	4	18187nigbel, 18155nigbel, 18158nigbel, 18165nigbel
+35	nig	bel	2	4	18171nigbel, 18162nigbel, 18156nigbel, 18185nigbel
+36	nig	bel	3	4	18157nigbel, 18151nigbel, 18153nigbel, 18159nigbel
+37	nig	boc	1	4	18904nigboc, 18905nigboc, 18424nigboc, 18428nigboc
+38	nig	boc	2	4	18903nigboc, 18418nigboc, 18907nigboc, 18901nigboc
+39	nig	boc	3	3	18902nigboc, 18906nigboc, 18909nigboc
+40	nig	gun	1	3	19105niggun, 19150niggun, 19131niggun
+41	nig	hon	1	4	20608nighon, 20609nighon, 20600nighon, 20603nighon
+42	nig	hon	2	4	20604nighon, 20605nighon, 20610nighon, 20602nighon
+43	nig	hon	3	4	20601nighon, 20606nighon, 20599nighon, 20607nighon
+44	nig	qui	1	3	30001nigqui, 29137nigqui, 33023nigqui
+45	pro	hon	1	3	20846prohon, 20650prohon, 20845prohon
+46	pue	arc	1	3	62577puearc, 62948puearc, 62953puearc
+47	pue	bar	1	3	19427puebar, 19428puebar, 19426puebar
+48	pue	bel	1	4	18166puebel, 18178puebel, 18174puebel, 18169puebel
+49	pue	bel	2	4	18172puebel, 18176puebel, 18179puebel, 18161puebel
+50	pue	bel	3	4	18175puebel, 18154puebel, 18180puebel, 18152puebel
+51	pue	boc	1	4	18426pueboc, 18915pueboc, 18434pueboc, 18912pueboc
+52	pue	boc	2	4	18429pueboc, 18419pueboc, 18427pueboc, 18430pueboc
+53	pue	boc	3	4	18432pueboc, 18421pueboc, 18422pueboc, 18917pueboc
+54	pue	flk	1	4	PL17_157pueflk, PL17_159pueflk, PL17_155pueflk, PL17_139pueflk
+55	pue	gun	1	3	19108puegun, 19106puegun, 19104puegun
+56	pue	hon	1	4	20554puehon, 20635puehon, 20558puehon, 20633puehon
+57	pue	hon	2	4	20625puehon, 20559puehon, 20638puehon, 20555puehon
+58	pue	hon	3	4	20552puehon, 20556puehon, 20553puehon, 20551puehon
+59	pue	pri	1	4	PL17_65puepri, PL17_60puepri, PL17_69puepri, PL17_54puepri
+60	pue	pri	2	4	PL17_53puepri, PL17_82puepri, PL17_57puepri, PL17_50puepri
+61	pue	qui	1	3	13310puequi, 28939puequi, 28713puequi
+62	ran	hon	1	4	20980ranhon, 20894ranhon, 20896ranhon, 20613ranhon
+63	ran	hon	2	4	20421ranhon, 20922ranhon, 20893ranhon, 20923ranhon
+64	ran	hon	3	4	20892ranhon, 20696ranhon, 20430ranhon, 20429ranhon
+65	tan	bar	1	3	19437tanbar, 19077tanbar, 19079tanbar
+66	tan	pri	1	3	PL17_71tanpri, PL17_76tanpri, PL17_23tanpri
+67	tan	pri	2	3	PL17_56tanpri, PL17_72tanpri, FL0324tanpri
+68	uni	bel	1	4	18267unibel, 20128unibel, 18274unibel, 18261unibel
+69	uni	bel	2	4	18163unibel, 20149unibel, 18276unibel, 20092unibel
+70	uni	bel	3	4	20135unibel, 20120unibel, 19881unibel, 20126unibel
+71	uni	boc	1	4	18445uniboc, 18448uniboc, 18440uniboc, 18446uniboc
+72	uni	boc	2	4	18450uniboc, 18447uniboc, 18454uniboc, 18441uniboc
+73	uni	boc	3	4	18442uniboc, 18420uniboc, 18435uniboc, 18439uniboc
+74	uni	flk	1	4	PL17_137uniflk, PL17_136uniflk, PL17_138uniflk, PL17_135uniflk
+75	uni	flk	2	4	PL17_141uniflk, PL17_140uniflk, PL17_143uniflk, PL17_134uniflk
+76	uni	hon	1	4	20565unihon, 20560unihon, 20563unihon, 20568unihon
+77	uni	hon	2	4	20566unihon, 20571unihon, 20562unihon, 20561unihon
+78	uni	hon	3	3	20564unihon, 20567unihon, 20572unihon
+79	uni	pri	1	4	PL17_63unipri, PL17_77unipri, PL17_66unipri, PL17_67unipri
+80	uni	pri	2	4	PL17_74unipri, PL17_73unipri, PL17_55unipri, PL17_70unipri
+81	uni	qui	1	3	27707uniqui, 13318uniqui, 27709uniqui
