@@ -23,7 +23,7 @@ lgs <- paste0("LG", sprintf('%0.2d', 1:24))
 
 
 ### Declare populations
-set <- read_tsv("metadata/samples_phylo.txt", col_names = "Sample") %>%
+set <- read_tsv("metadata/samples_ids.txt", col_names = "Sample") %>%
   mutate(Population = str_sub(Sample, -6, -1))
 # set <- set %>% filter(!grepl("tor|tab|tig", Population))   # execute if outgroups were removed
 

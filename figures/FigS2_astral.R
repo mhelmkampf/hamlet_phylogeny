@@ -21,8 +21,8 @@ rm(list=ls())
 phylo <- read.tree("results/trees/phylo2k_s27_astral.tre")
 
 
-### Set terminal branches
-phylo$edge.length <- replace(phylo$edge.length, phylo$edge.length == "NaN", 0.05)
+### Set terminal branches to constant length
+phylo$edge.length <- replace(phylo$edge.length, phylo$edge.length == "NaN", 0.025)
 
 
 ### Root tree
@@ -70,7 +70,6 @@ atlantic <- c("bar", "hai", "pri", "flk")
              loc %in% gulf ~ "Gulf of Mexico",
              loc %in% caribbean ~ "Caribbean",
              loc %in% atlantic ~ "Atlantic",
-             # loc %in% florida ~ "Florida",
              TRUE ~ "NA"),
            support = as.numeric(if_else(!isTip, label, "NA")) * 100,
            support_class = cut(as.numeric(support), c(0, 50, 70, 90, 100)) %>%
@@ -135,7 +134,7 @@ scol <- tree %>%
                            fontsize = 3, 
                            color = "gray60",
                            x = 0, y = 50) +
-    theme(legend.position = c(0.12, 0.3),
+    theme(legend.position = c(0.1, 0.85),
           legend.text = element_text(color = "gray20"),
           legend.title = element_text(color = "gray20"),
           legend.spacing.y = unit(5, "mm")

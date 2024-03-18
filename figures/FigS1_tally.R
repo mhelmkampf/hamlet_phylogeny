@@ -15,7 +15,7 @@ rm(list=ls())
 
 
 ### Read in sample list
-samples <- read_tsv(file = "metadata/samples_phylo.txt", col_names = "Sample")
+samples <- read_tsv(file = "metadata/samples_phylo.ids", col_names = "Sample")
 
 
 ### Relabel samples (samples file has been updated, keep for documentation purposes)
