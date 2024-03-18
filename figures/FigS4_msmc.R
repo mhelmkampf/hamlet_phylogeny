@@ -120,7 +120,7 @@ cc_filt <- cc_data %>%
 
 ### Save plot to file
 ggsave(plot = p_comb,
-       filename = "figures/FigSx_msmc.pdf",
+       filename = "figures/FigS4_msmc.pdf",
        width = 7,
        height = 10,
        device = cairo_pdf,
