@@ -98,7 +98,7 @@ clr_neutral <- rgb(0.2, 0.2, 0.2)
   geom_tiplab(aes(color = group, label = if_else(label %in% our_taxa, str_c(label,"*"), label)),   # add asterisks to our taxa
               size = 3.5, 
               hjust = -0.1,
-              fontface = 'italic') +
+              fontface = "italic") +
   ggplot2::xlim(0, 0.17) +   # add extra space for long labels
   geom_nodepoint(aes(fill = support_class,
                      size = support_class),

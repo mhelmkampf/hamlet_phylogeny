@@ -1,6 +1,6 @@
 ### ============================================================================
 ### Hamlet phylogeny: R code to plot Fig. S3 (SVDQuartets tree)
-### Created Oct 2024 by Martin Helmkampf
+### Created Oct 2023 by Martin Helmkampf
 ### ============================================================================
 
 
@@ -55,7 +55,7 @@ scol <- tree %>%
 
 ### Draw tree
 (t <- ggtree(tr = tree, 
-             layout = 'rectangular',
+             layout = "rectangular",
              size = 0.5,
              color = scol) +
     geom_tiplab(color = "gray60", 
@@ -86,7 +86,7 @@ scol <- tree %>%
            fill = guide_legend(title = "Support", title.position = "top"),
            size = guide_legend(title = "Support", title.position = "top")
     ) +
-    theme(legend.position = c(0.12, 0.6),
+    theme(legend.position = c(0.1, 0.96),
           legend.text = element_text(color = "gray20"),
           legend.title = element_text(color = "gray20"),
           legend.spacing.y = unit(5, "mm")
