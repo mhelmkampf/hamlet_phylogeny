@@ -13,8 +13,7 @@ library(tidyverse)
 
 # Set path to root directory of git repository "hamlet_phylogeny"
 
-dev.off()
-rm(list=ls())
+rm(list = ls())
 
 
 ### Read in tree

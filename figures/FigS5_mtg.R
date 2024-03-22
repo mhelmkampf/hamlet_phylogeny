@@ -12,8 +12,7 @@ library(tidyverse)
 
 # Set path to root directory of git repository "hamlet_phylogeny"
 
-rm(list=ls())
-dev.off()
+rm(list = ls())
 
 
 ### Read in tree in Newick format
@@ -144,12 +143,12 @@ incon <- tree %>%
 
 (a <- t +
     geom_segment(data = incon,
-                 color = "red",
+                 color = c("#837ABE", "#837ABE","peru", "peru"),
                  lwd = 1,
                  arrow = arrow(length = unit(0.15, "cm")),
-                 aes(x = x + 0.00075,
+                 aes(x = x + 0.00125,
                      y = y,
-                     xend = x + 0.0005,
+                     xend = x + 0.0009,
                      yend = y),
                  inherit.aes = FALSE
                  )

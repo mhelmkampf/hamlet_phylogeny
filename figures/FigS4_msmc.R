@@ -11,8 +11,7 @@ library(GenomicOriginsScripts)   # see https://k-hench.github.io/GenomicOriginsS
 
 # Set path to root directory of git repository "hamlet_phylogeny"
 
-rm(list=ls())
-dev.off()
+rm(list = ls())
 
 
 ### Set paths
