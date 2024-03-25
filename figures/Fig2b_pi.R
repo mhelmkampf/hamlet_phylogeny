@@ -22,11 +22,11 @@ lgs <- paste0("LG", sprintf('%0.2d', 1:24))
 
 
 ### Declare populations
-set <- read_tsv("metadata/samples_ids.txt", col_names = "Sample") %>%
+samples <- read_tsv("metadata/samples_ids.txt", col_names = "Sample") %>%
   mutate(Population = str_sub(Sample, -6, -1))
-# set <- set %>% filter(!grepl("tor|tab|tig", Population))   # execute if outgroups were removed
+# samples <- samples %>% filter(!grepl("tor|tab|tig", Population))   # execute if outgroups were removed
 
-populations <- levels(factor(set$Population))
+populations <- levels(factor(samples$Population))
 
 
 ### Define regions
@@ -68,7 +68,7 @@ nucdiv <- as_tibble(df) %>%
          )
   ) %>%
   filter(!grepl("tor|tab|tig", population),
-         !population %in% set)
+         !population %in% samples)
 
 
 ### Create histogram plot
