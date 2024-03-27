@@ -1,6 +1,6 @@
 ### ============================================================================
 ### phylo2
-### Estimate admixture proportions (for each k, per sample )
+### Estimate admixture proportions (for each k, per sample)
 ### ============================================================================
 
 ### Preparations
