@@ -138,8 +138,8 @@ nrow(sign_Dmin) / nrow(trios)
                          limits = c(min(fsym_BBAA$f4_ratio), max(fsym_BBAA$f4_ratio)),
                          na.value = "white",
                          name = "f4 ratio\nBBAA topology") +
-    scale_x_discrete(position = "top") +
-    scale_y_discrete(limits = rev) +
+    scale_x_discrete(position = "top", labels = function(x) str_replace(str_replace(x, "tan", "sp1"), "esp", "sp2")) +
+    scale_y_discrete(limits = rev, labels = function(y) str_replace(str_replace(y, "tan", "sp1"), "esp", "sp2")) +
     coord_equal(clip = "off") +
     theme_minimal(base_size = 8) +
     theme(axis.text.x = element_text(size = 3, hjust = 0, angle = 45),
@@ -151,6 +151,7 @@ nrow(sign_Dmin) / nrow(trios)
           legend.margin = margin(l = 5, r = 2)
     )
 )
+
 
 (fd <- fsym_Dmin %>%
     ggplot(aes(x = fct_relevel(P2, pop_by_region), 
@@ -164,8 +165,10 @@ nrow(sign_Dmin) / nrow(trios)
                          limits = c(min(fsym_BBAA$f4_ratio), max(fsym_BBAA$f4_ratio)),
                          na.value = "white",
                          name = "f4 ratio\nDmin topology") +
-    scale_x_discrete(position = "top") +
-    scale_y_discrete(limits = rev) +
+    scale_x_discrete(position = "top", 
+                     labels = function(x) str_replace(str_replace(x, "tan", "sp1"), "esp", "sp2")) +
+    scale_y_discrete(limits = rev, 
+                     labels = function(y) str_replace(str_replace(y, "tan", "sp1"), "esp", "sp2")) +
     coord_equal(clip = "off") +
     theme_minimal(base_size = 8) +
     theme(axis.text.x = element_text(size = 3, hjust = 0, angle = 45),
@@ -228,8 +231,10 @@ ggsave(
 #                          limits = c(min(dsym_BBAA$Dstatistic), max(dsym_BBAA$Dstatistic)),
 #                          na.value = "white",
 #                          name = "D-statistic\nBBAA topology") +
-#     scale_x_discrete(position = "top") +
-#     scale_y_discrete(limits = rev) +
+#     scale_x_discrete(position = "top", 
+#                      labels = function(x) str_replace(str_replace(x, "tan", "sp1"), "esp", "sp2")) +
+#     scale_y_discrete(limits = rev, 
+#                      labels = function(y) str_replace(str_replace(y, "tan", "sp1"), "esp", "sp2")) +
 #     coord_equal(clip = "off") +
 #     theme_minimal(base_size = 8) +
 #     theme(axis.text.x = element_text(size = 3, hjust = 0, angle = 45),
@@ -254,8 +259,10 @@ ggsave(
 #                          limits = c(min(dsym_BBAA$Dstatistic), max(dsym_BBAA$Dstatistic)),
 #                          na.value = "white",
 #                          name = "D-statistic\nDmin topology") +
-#     scale_x_discrete(position = "top") +
-#     scale_y_discrete(limits = rev) +
+#     scale_x_discrete(position = "top", 
+#                      labels = function(x) str_replace(str_replace(x, "tan", "sp1"), "esp", "sp2")) +
+#     scale_y_discrete(limits = rev, 
+#                      labels = function(y) str_replace(str_replace(y, "tan", "sp1"), "esp", "sp2")) +
 #     coord_equal(clip = "off") +
 #     theme_minimal(base_size = 8) +
 #     theme(axis.text.x = element_text(size = 3, hjust = 0, angle = 45),

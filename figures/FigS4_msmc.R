@@ -44,6 +44,12 @@ colstandard <- read_tsv("metadata/species_colors.tsv",
   filter(Species != "cas")
 
 
+# Define replacement labels
+spn_labels <- colstandard$Species
+spn_labels[which(spn_labels == "tan")] <- "sp1"
+spn_labels[which(spn_labels == "esp")] <- "sp2"
+
+
 ### Define groups
 small <- c("atl", "eco", "flo")
 large <- c(subset(colstandard$Species, !(colstandard$Species %in% small)), "cas")
@@ -55,7 +61,7 @@ large <- c(subset(colstandard$Species, !(colstandard$Species %in% small)), "cas"
   ggplot(aes(x = YBP, y = Ne, group = run_nr, color = spec)) +
   geom_line(linewidth = 0.5) +
   annotation_logticks(sides = "tl", color = "lightgray", size = plot_lwd) +   # add guides for the logarithmic axes
-  scale_color_manual(values = colstandard$Color, label = colstandard$Species) +
+  scale_color_manual(values = colstandard$Color, labels = spn_labels) +
   scale_x_log10(expand = c(0, 0),
                 breaks = c(10^3, 10^4, 10^5),
                 position = "top",

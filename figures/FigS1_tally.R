@@ -14,31 +14,7 @@ rm(list = ls())
 
 
 ### Read in sample list
-samples <- read_tsv(file = "metadata/samples_phylo.ids", col_names = "Sample")
-
-
-### Relabel samples (samples file has been updated, keep for documentation purposes)
-# samples$Sample <- samples$Sample %>%
-#   str_replace(pattern = "54761nigliz", "54761atlliz") %>%
-#   str_replace(pattern = "52989nigtam", "52989atltam") %>%
-#   str_replace(pattern = "27936flotam", "27936atltam") %>%
-#   str_replace(pattern = "PL17_35puepri", "PL17_35indpri") %>%
-#   str_replace(pattern = "19294tangun", "19294affgun") %>%
-#   str_replace(pattern = "62585uniarc", "62585esparc") %>%
-#   str_replace(pattern = "62571uniarc", "62571esparc") %>%
-#   str_replace(pattern = "62555uniarc", "62555esparc") %>%
-#   str_replace(pattern = "27698gutqui", "27698abequi")
-# 
-# metaseq$Sample <- metaseq$Sample %>%
-#   str_replace(pattern = "54761nigliz", "54761atlliz") %>%
-#   str_replace(pattern = "52989nigtam", "52989atltam") %>%
-#   str_replace(pattern = "27936flotam", "27936atltam") %>%
-#   str_replace(pattern = "PL17_35puepri", "PL17_35indpri") %>%
-#   str_replace(pattern = "19294tangun", "19294affgun") %>%
-#   str_replace(pattern = "62585uniarc", "62585esparc") %>%
-#   str_replace(pattern = "62571uniarc", "62571esparc") %>%
-#   str_replace(pattern = "62555uniarc", "62555esparc") %>%
-#   str_replace(pattern = "27698gutqui", "27698abequi")
+samples <- read_tsv(file = "metadata/samples_ids.txt", col_names = "Sample")
 
 
 ### Add species / location information
@@ -55,8 +31,8 @@ ingroup <- c("abe", "aff", "atl", "cas", "chl", "eco", "esp", "flo", "gem", "gum
 outgroup <- c("tab", "tig", "tor")
 
 gulf <- c("liz", "tam", "ala", "arc", "are", "flk")
-caribbean <- c("bel", "boc", "gun", "hon", "san", "qui")
-atlantic <- c("bar", "hai", "pri")
+west_carib <- c("bel", "boc", "gun", "hon", "san", "qui")
+east_carib <- c("bar", "hai", "pri")
 
 
 ### Summarize
@@ -78,8 +54,8 @@ order_sp <- samplesSL %>%
 order_loc <- samplesSL %>%
   mutate(Region = case_when(
     Location %in% gulf ~ "Gulf of Mexico",
-    Location %in% caribbean ~ "Caribbean",
-    Location %in% atlantic ~ "Atlantic")) %>%
+    Location %in% west_carib ~ "Western Caribbean",
+    Location %in% east_carib ~ "Eastern Caribbean")) %>%
   dplyr::count(Location, Region) %>%
   group_by(Region) %>%
   arrange(match(Region, c("Caribbean", "Atlantic", "Gulf of Mexico")), desc(n)) %>%
@@ -110,12 +86,15 @@ sum <- textGrob(sum(counts$n), gp = gpar(fontsize = 12, fontface = "bold"))
   geom_hline(yintercept = 3.5, col = "gray80", linetype = "dashed") +
   scale_color_manual(values = rev(scol$Color)) +
   scale_size_area(max_size = 11) +
+  scale_y_discrete(labels = function(x) {
+      ifelse(x == "tan", "sp1", ifelse(x == "esp", "sp2", x))
+    }) +
   coord_cartesian(clip = "off") +
   labs(title = NULL, x = NULL, y = NULL) +
   annotate(geom = "text", 
            x = c(3.5, 8, 12.5, 16, 16), 
-           y = c(24, 24, 24, 12.5, 2), 
-           label = c("Caribbean", "Atlantic", "Gulf of Mexico", "Ingroup", "Outgroup"),
+           y = c(24.5, 24.5, 24.5, 12.5, 2), 
+           label = c("Western Caribbean", "Eastern Caribbean", "Gulf of Mexico", "Ingroup", "Outgroup"),
            angle = c(0, 0, 0, 270, 270),
            color = "gray20") +
   annotation_custom(sum, xmin = 16, xmax = 16, ymin = 0.07, ymax = 0.07) +

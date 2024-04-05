@@ -7,6 +7,7 @@
 ### Preparations
 library(ape)
 library(treeio)
+library(phangorn)
 library(ggtree)
 library(tidyverse)
 
@@ -47,9 +48,9 @@ rooted$edge.length[longr] <- rooted$edge.length[longr] * 0.1
 
 
 ### Define regions
-gulf <- c("liz", "tam", "ala", "arc", "are")
-caribbean <- c("bel", "boc", "gun", "hon", "san", "qui")
-atlantic <- c("bar", "hai", "pri", "flk")
+gulf <- c("liz", "tam", "ala", "arc", "are", "flk")
+west_carib <- c("bel", "boc", "gun", "hon", "san", "qui")
+east_carib <- c("bar", "hai", "pri")
 
 
 ### Add species / location labels and support categories
@@ -59,16 +60,13 @@ atlantic <- c("bar", "hai", "pri", "flk")
            loc = if_else(isTip, str_sub(label, -3, -1), "ungrouped"),
            region = case_when(
              loc %in% gulf ~ "Gulf of Mexico",
-             loc %in% caribbean ~ "Caribbean",
-             loc %in% atlantic ~ "Atlantic",
-             TRUE ~ "NA"),
+             loc %in% west_carib ~ "Western Caribbean",
+             loc %in% east_carib ~ "Eastern Caribbean"),
            support = as.numeric(if_else(!isTip, label, "NA")),
            support_class = cut(as.numeric(support), c(0, 50, 70, 90, 100)) %>%
              as.character() %>% factor(levels = c("(0,50]", "(50,70]", "(70,90]", "(90,100]")),
            branch_type = case_when(node %in% longg ~ "broken", 
-                                   TRUE ~ "whole"),
-           mito_nuclear = case_when(label %in% incon ~ "red",
-                                    TRUE ~ "gray60")
+                                   TRUE ~ "whole")
     )
 )
 
@@ -104,7 +102,8 @@ scol <- tree %>%
                    color = "gray20") +
     # labs(title = "Hamlet phylogeny, whole mitochondrial genome",
     #      subtitle = "RAxML-NG, thorough search, GTR+G model, 200 nonparametric bootstrap replicates, midpoint root") +
-    scale_color_manual(values = c("olivedrab4", "royalblue1", "coral2", "gray60")) +
+    scale_color_manual(values = c("coral2", "royalblue1", "olivedrab4"),
+                       breaks = c("Gulf of Mexico", "Western Caribbean", "Eastern Caribbean")) +
     scale_fill_manual(values = c(`(0,50]`   = "transparent",
                                  `(50,70]`  = "white",
                                  `(70,90]`  = "gray",
