@@ -31,8 +31,8 @@ populations <- levels(factor(samples$Population))
 
 ### Define regions
 gulf <- c("liz", "tam", "ala", "arc", "are", "flk")
-caribbean <- c("bel", "boc", "gun", "hon", "san", "qui")
-atlantic <- c("bar", "hai", "pri")
+west_carib <- c("bel", "boc", "gun", "hon", "san", "qui")
+east_carib <- c("bar", "hai", "pri")
 
 
 ### Read in data from files
@@ -59,8 +59,8 @@ nucdiv <- as_tibble(df) %>%
          loc = str_sub(population, -3, -1),
          region = case_when(
            loc %in% gulf ~ "Gulf of Mexico",
-           loc %in% caribbean ~ "Caribbean",
-           loc %in% atlantic ~ "Atlantic",
+           loc %in% west_carib ~ "Western Caribbean",
+           loc %in% east_carib ~ "Eastern Caribbean",
            TRUE ~ "ungrouped"),
          clade = case_when(
            spec %in% c("atl", "eco", "flo") ~ "Small clade",
@@ -92,7 +92,7 @@ nucdiv <- as_tibble(df) %>%
     geom_errorbar(aes(ymin = mean_pi - sd_pi, ymax = mean_pi + sd_pi),
                   color = "grey50",
                   width = 0.4) +
-    scale_fill_manual(breaks = c("Gulf of Mexico", "Caribbean", "Atlantic"),
+    scale_fill_manual(breaks = c("Gulf of Mexico", "Western Caribbean", "Eastern Caribbean"),
                       values = c("coral2", "royalblue1", "olivedrab4")) +
     scale_pattern_manual(breaks = c("Small clade", "Large clade"), 
                          values = c("stripe", "none")) +

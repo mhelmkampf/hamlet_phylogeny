@@ -1,0 +1,15 @@
+Numbering is subject to change as paragraphs may move around in the Materials and Methods.
+
+12 – DILS
+13 – BioGeoBEARS
+14 – GWAS
+15 – Region-specific trees
+16 - HAR phylogeny
+17 – RNA-seq counts
+18 – WGCNA
+19 – Splicing
+20 – TE analysis
+21 – Structural variation
+
+Genome assembly?
+Opsin annotation?
