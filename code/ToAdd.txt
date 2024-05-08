@@ -1,15 +1,15 @@
-Numbering is subject to change as paragraphs may move around in the Materials and Methods.
+Numbering is subject to change as paragraphs may move around in the Materials and Methods. Some of these analyses may also not require code to be published.
 
-12 – DILS
-13 – BioGeoBEARS
-14 – GWAS
-15 – Region-specific trees
-16 - HAR phylogeny
-17 – RNA-seq counts
-18 – WGCNA
-19 – Splicing
-20 – TE analysis
-21 – Structural variation
+12 – DILS (Flo)
+13 – BioGeoBEARS (Aintzane?)
+14 – GWAS (Flo)
+15 – Region-specific trees (Flo)
+16 - HAR phylogeny (to do, Martin)
+17 – RNA-seq counts / DGE (Mel)
+18 – WGCNA (Mel, Alice)
+19 – Splicing (Mel)
+20 – TE analysis (Mel, Iliana)
+21 – Structural variation (Mel)
 
 Genome assembly?
-Opsin annotation?
+

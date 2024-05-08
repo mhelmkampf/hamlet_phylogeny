@@ -7,7 +7,6 @@
 ### Preparations
 library(tidyverse)
 library(patchwork)
-library(GenomicOriginsScripts)   # see https://k-hench.github.io/GenomicOriginsScripts/index.html
 
 # Set path to root directory of git repository "hamlet_phylogeny"
 
@@ -27,6 +26,36 @@ cc_grouping <- read_tsv("data/msmc/cc_phylo2e_gom.tsv")
 ### Locate results
 Ne_files <- dir(Ne_path, pattern = "*.final.txt")
 cc_files <- dir(cc_path, pattern = "*.final.txt")
+
+
+### Functions to convert results (from GenomicOriginsScripts package by Kosmas Hench)
+get_msmc <- function (file, msmc_path, mu = 3.7e-08, gen = 1) 
+{
+  vroom::vroom(stringr::str_c(msmc_path, file), delim = "\t") %>% 
+    tidyr::gather("Side", "time_value", 2:3) %>% dplyr::arrange(time_index) %>% 
+    dplyr::mutate(YBP = time_value/mu * gen, Ne = (1/lambda)/mu, 
+                  run_nr = stringr::str_replace(file, pattern = "run([0-9]*).*", 
+                                                replacement = "\\1") %>% as.numeric(), spec = stringr::str_replace(file, 
+                                                                                                                   pattern = "run[0-9]*\\.([a-z]*).*", replacement = "\\1"), 
+                  loc = stringr::str_replace(file, pattern = "run[0-9]*\\.[a-z]{3}\\.([a-z]*).*", 
+                                             replacement = "\\1"), run = stringr::str_c(spec, 
+                                                                                        loc))
+}
+
+get_cc <- function (file, cc_groups, cc_path, mu = 3.7e-08, gen = 1) 
+{
+  cc_run <- stringr::str_replace(file, pattern = "cc_run\\.([0-9]*).*", 
+                                 replacement = "\\1") %>% as.numeric()
+  specs <- c(cc_groups$spec_1[cc_groups$run_nr == cc_run], 
+             cc_groups$spec_2[cc_groups$run_nr == cc_run]) %>% sort()
+  loc <- cc_groups$geo[cc_groups$run_nr == cc_run]
+  vroom::vroom(stringr::str_c(cc_path, file), delim = "\t") %>% 
+    tidyr::gather("Side", "time_value", 2:3) %>% dplyr::arrange(time_index) %>% 
+    dplyr::mutate(YBP = time_value/mu * gen, Cross_coal = 2 * 
+                    lambda_01/(lambda_00 + lambda_11), run_nr = cc_run, 
+                  spec_1 = specs[1], spec_2 = specs[2], loc = loc, 
+                  run = str_c(spec_1, loc, "-", spec_2, loc))
+}
 
 
 ### Import results
