@@ -151,7 +151,7 @@ cat > $jobfile2 <<EOA # generate the job file
 
 # Input files to merge, binary genotyping file & phenotyping file
 fam=$BASE_DIR/outputs/gxp_clades/large/GxP_plink_binary.fam
-pheno=$BASE_DIR/outputs/gxp_clades/large/large_pheno.txt
+pheno=$BASE_DIR/metadata/large_pheno.txt
 
 
 # Sort both input files 
@@ -291,7 +291,7 @@ module load R/4.3.1-foss-2023a
 rm $BASE_DIR/outputs/gxp_clades/large/\*.tmp
 
 # Run Rscript for GWAS Manhattan plot 
-Rscript $BASE_DIR/R/gxp_plot.R $BASE_DIR/outputs/gxp_clades/large/ $BASE_DIR/figures/gxp_clades/large/
+Rscript $BASE_DIR/code/R/gxp_plot.R $BASE_DIR/outputs/gxp_clades/large/ $BASE_DIR/figures/gxp_clades/large/
 
 
 EOA
