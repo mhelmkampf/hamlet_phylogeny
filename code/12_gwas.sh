@@ -1,7 +1,7 @@
 #!/bin/bash
 # by: Floriane Coulmance: 01/12/2023
 # usage:
-# gxp_clades.sh -i <PATH> -j <JOB_ID>
+# 12_gwas.sh -i <PATH> -j <JOB_ID>
 # ------------------------------------------------------------------------------
 # <PATH> corresponds to the path to the base directory, all outputs and necessary
 # folders will be created by the script
