@@ -1,7 +1,7 @@
 #!/bin/bash
 # by: Floriane Coulmance: 01/12/2023
 # usage:
-# 12_gwas.sh -i <PATH> -j <JOB_ID>
+# 14_gwas.sh -i <PATH> -j <JOB_ID>
 # ------------------------------------------------------------------------------
 # <PATH> corresponds to the path to the base directory, all outputs and necessary
 # folders will be created by the script
