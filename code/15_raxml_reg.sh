@@ -248,10 +248,70 @@ EOA
 
 
 
+# ------------------------------------------------------------------------------
+# Job 3 plot phylogenetic tree
+
+jobfile3=3_plot.tmp # temp file
+cat > $jobfile3 <<EOA # generate the job file
+#!/bin/bash
+#SBATCH --job-name=3_plot
+#SBATCH --partition=rosa.p
+#SBATCH --array=0-7
+#SBATCH --output=$BASE_DIR/logs/3_plot_%A_%a.out
+#SBATCH --error=$BASE_DIR/logs/3_plot_%A_%a.err
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=90G
+#SBATCH --time=03:00:00
+
+
+# Load necessary modules for University of Oldenburg cluster (ROSA)
+module load hpc-env/13.1
+module load R/4.3.1-foss-2023a
+
+
+# Input file with list and genomic positions of regions of interest from GWAS
+INPUT=$BASE_DIR/outputs/gxp_clades/large/gxp_large_gemma_lmm_regions.txt
+echo \${INPUT}
+
+# Extract region ID column (8 lines)
+REG=(\$(awk '{print \$1}' \${INPUT}))
+echo \${REG[@]}
+
+# Run this job in parallel for each region ID (8 jobs)
+GEN=\${REG[\${SLURM_ARRAY_TASK_ID}]}
+echo \${GEN}
+
+# Extract line from region table corresponding to current region
+LINE=(\$(grep "\${GEN}" \${INPUT}))
+echo \${LINE[@]}
+
+# Extract Linkage Group (LG), start and end positions corresponding to region considered in this job
+LG="\${GEN:0:4}" 
+START=\${LINE[2]}
+END=\${LINE[3]}
+
+echo \${LG}
+echo \${START}
+echo \${END}
+
+# Input the phylogenetic tree support result from previous job
+SUP=$BASE_DIR/outputs/gxp_clades/large/\${GEN}_\${START}_\${END}.raxml.support
+echo \${SUP}
+
+# Run Rscript to plot phylogenetic tree
+Rscript $BASE_DIR/code/R/tree.R $BASE_DIR \${SUP}
+
+
+EOA
+
+
+
 # ********** Schedule the job launching ***********
 # -------------------------------------------------
 
-if [ "$JID_RES" = "jid1" ] || [ "$JID_RES" = "jid2" ];
+if [ "$JID_RES" = "jid1" ] || [ "$JID_RES" = "jid2" ] || [ "$JID_RES" = "jid3" ];
 then
   echo "*****   0_gen      : DONE         **"
 else
@@ -259,7 +319,7 @@ else
 fi
 
 
-if [ "$JID_RES" = "jid2" ];
+if [ "$JID_RES" = "jid2" ] || [ "$JID_RES" = "jid3" ];
 then
   echo "*****   1_tab      : DONE         **"
 elif [ "$JID_RES" = jid1 ]
@@ -270,9 +330,20 @@ else
 fi
 
 
-if [ "$JID_RES" = "jid2" ];
+if [ "$JID_RES" = "jid3" ];
+then
+  echo "*****   2_rax      : DONE         **"
+elif [ "$JID_RES" = jid2 ]
 then
   jid2=$(sbatch ${jobfile2})
 else
   jid2=$(sbatch --dependency=afterok:${jid1##* } ${jobfile2})
+fi
+
+
+if [ "$JID_RES" = "jid3" ];
+then
+  jid3=$(sbatch ${jobfile3})
+else
+  jid3=$(sbatch --dependency=afterok:${jid2##* } ${jobfile3})
 fi
