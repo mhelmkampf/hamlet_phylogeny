@@ -1,0 +1,24 @@
+mail_address: floriane.coulmance@cri-paris.org
+infile: /hamlet_phylogeny/data/dils/all935.fa # change path accordingly to your folder structure
+region: noncoding
+nspecies: 2
+nameA: large
+nameB: small
+nameOutgroup: ser
+lightMode: FALSE
+useSFS: 1
+config_yaml: /hamlet_phylogeny/code/yaml/large_small_ser_2pop.yaml # change accordingly to your folder structure
+timeStamp: large_small_ser_2pop
+population_growth: constant
+modeBarrier: bimodal
+max_N_tolerated: 0.2
+Lmin: 100
+nMin: 6
+mu: 0.000000037 # stickleback mutation rate
+rho_over_theta: 0.5
+N_min: 0
+N_max: 500000
+Tsplit_min: 0
+Tsplit_max: 1750000
+M_min: 1
+M_max: 40
