@@ -1,0 +1,1 @@
+LocusID	Species	N_individuals	AlnSeqLength	N_sites_noN	AvgSeqLg_noN	N_SNPsBi	N_SNPs_Mult	GC_content	NbRec	SNP_coverage

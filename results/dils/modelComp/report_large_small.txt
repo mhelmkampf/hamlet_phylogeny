@@ -1,0 +1,60 @@
+
+#####
+
+MODEL COMPARISON #1: migration versus isolation
+#confusion matrix:
+isolation	migration	class.error
+isolation	57597	2403	0.04005
+migration	1168	78832	0.0146
+
+#best model: migration
+#proba best model: 0.879016666666667
+
+#votes:
+isolation	140
+migration	860
+
+#####
+
+MODEL COMPARISON #2: IM versus SC
+#confusion matrix:
+IM	SC	class.error
+IM	36670	3330	0.08325
+SC	6377	33623	0.159425
+
+#best model: IM
+#proba best model: 0.830316666666667
+
+#votes:
+IM	788
+SC	212
+
+#####
+
+MODEL COMPARISON #3: Mhomo versus Mhetero
+#confusion matrix:
+Mhetero	Mhomo	class.error
+Mhetero	37026	2974	0.07435
+Mhomo	1837	38163	0.045925
+
+#best model: Mhomo
+#proba best model: 0.866583333333333
+
+#votes:
+Mhetero	154
+Mhomo	846
+
+#####
+
+MODEL COMPARISON #4: Nhomo versus Nhetero
+#confusion matrix:
+Nhetero	Nhomo	class.error
+Nhetero	34995	5005	0.125125
+Nhomo	1903	38097	0.047575
+
+#best model: Nhomo
+#proba best model: 0.7703
+
+#votes:
+Nhetero	381
+Nhomo	619

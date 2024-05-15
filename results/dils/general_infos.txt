@@ -1,0 +1,6 @@
+nSpecies,2
+nameA,large
+nameB,small
+nLoci,920
+mail,floriane.coulmance@cri-paris.org
+date,Tue 17 Oct 2023 12:50:28 PM CEST
