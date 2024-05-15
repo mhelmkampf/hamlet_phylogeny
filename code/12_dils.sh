@@ -1,10 +1,10 @@
 #!/bin/bash
 # by: Floriane Coulmance: 01/12/2023
 # usage:
-# 12_dils.sh -i <PATH>
+# 12_dils.sh -i <BASE_DIR>
 # ------------------------------------------------------------------------------
-# <PATH> corresponds to the path to the base directory, all outputs and necessary
-# folders will be created by the script
+# <BASE_DIR> is the base directory path, here /hamlet_phylogeny
+# All necessary folders and output files will be created by the script
 # ------------------------------------------------------------------------------
 
 #SBATCH --partition=rosa.p
