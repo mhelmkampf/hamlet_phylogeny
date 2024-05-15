@@ -1,0 +1,3 @@
+migration versus isolation	IM versus SC	M-homo versus M-hetero	N-homo versus N-hetero
+migration	IM	Mhomo	Nhomo
+0.879016666666667	0.830316666666667	0.866583333333333	0.7703
