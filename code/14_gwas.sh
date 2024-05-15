@@ -70,7 +70,7 @@ module load R/4.3.1-foss-2023a
 module load BCFtools/1.18-GCC-13.1.0
 
 # Input the bi-allelic genotyping file (hamlets, no outgroups)
-INPUT_BI=$BASE_DIR/data/phyps2e_m2.vcf.gz                   
+INPUT_BI=$BASE_DIR/data/gwas/phyps2e_m2.vcf.gz                   
 
 # Split genotypingg file into 2 for both small & large clades
 bcftools view -Oz -S $BASE_DIR/metadata/large_sample_list \${INPUT_BI} > $BASE_DIR/data/large_phyps2e_m2.vcf.gz
