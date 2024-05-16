@@ -7,12 +7,10 @@ Numbering is subject to change as paragraphs may move around in the Materials an
 16 - Whole-gene casz1 tree (Flo)
 17 - Exons casz1 tree (Flo)
 18 - Concatenated region trees (Flo)
-19 - HAR phylogeny (to do, Martin)
-20 – RNA-seq counts / DGE (Mel)
-21 – WGCNA (Mel, Alice)
-22 – Splicing (Mel)
-23 – TE analysis (Mel, Iliana)
-24 – Structural variation (Mel)
+19 – RNA-seq counts / DGE (Mel)
+20 – WGCNA (Mel, Alice)
+21 – Splicing (Mel)
+22 – TE analysis (Mel, Iliana)
+23 – Structural variation (Mel)
 
 Genome assembly?
-
