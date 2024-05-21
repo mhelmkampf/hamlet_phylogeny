@@ -44,10 +44,11 @@ print(args)
 
 # Get the base directory path
 base_dir <- as.character(args[1])
+# base_dir <- "/Users/fco/Desktop/PhD/2_CHAPTER2/chapter2/"
 
 # Get the tree file path
 phyps2 <- as.character(args[2])
-# phyps2 <- "/Users/fco/Desktop/PhD/2_CHAPTER2/chapter2/figures/casz1_cds_phylo/casz1_23exons.raxml.support"
+# phyps2 <- "/Users/fco/Desktop/PhD/2_CHAPTER2/chapter2/figures/gxp_clades/large/8_regions.raxml.support"
 
 
 
@@ -102,10 +103,10 @@ rooted <- root(phy = raxml_tree, outgroup = outsamples, edgelabel = TRUE)
 
   # Identify long branches
 tree_data <- ggtree(rooted)$data
-longg <- which(tree_data$branch.length > median(tree_data$branch.length) * 505)
+longg <- which(tree_data$branch.length > median(tree_data$branch.length) * 55)
 
   # Compress long branches
-longr <- which(rooted$edge.length > median(rooted$edge.length) * 505)
+longr <- which(rooted$edge.length > median(rooted$edge.length) * 55)
 rooted$edge.length[longr] <- rooted$edge.length[longr] * 0.05
 
 
@@ -184,7 +185,7 @@ tree <- ggtree(rooted) %>%
          )
 
   # Read species color codes
-colstandard <- read_tsv(paste0(base_dir+"/metadata/species_colors.tsv"), 
+colstandard <- read_tsv(paste0(base_dir,"/metadata/species_colors.tsv"), 
                         col_types = "cc", 
                         col_names = TRUE)
 
@@ -274,7 +275,7 @@ scol <- tree %>%
   # guides(fill = guide_legend(title = "Support", title.position = "top", order = 2),
   #        size = guide_legend(title = "Support", title.position = "top", order = 2),
   #        color = guide_legend(title = "Species", nrow = 3, title.position = "top", order = 1)) +
-  ggtree::geom_treescale(width = 0.0001,
+  ggtree::geom_treescale(width = 0.05,
                          fontsize = 3,
                          color = "gray60",
                          x = .00003, y = 0) +
@@ -369,7 +370,7 @@ r <- r %>%
 
   # Save the tree figure
 hypo_save(plot = p,
-          filename = paste0(base_dir+"/figures/casz1_cds_phylo/casz1_23exons.pdf"),
+          filename = paste0(base_dir,"/figures/gxp_clades/large/8_regions.pdf"),
           width = 46,
           height = 50,
           device = cairo_pdf,
