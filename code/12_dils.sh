@@ -1,10 +1,10 @@
 #!/bin/bash
 # by: Floriane Coulmance: 01/12/2023
 # usage:
-# 12_dils.sh -i <BASE_DIR>
+# 12_dils.sh -i <PATH>
 # ------------------------------------------------------------------------------
-# <BASE_DIR> is the base directory path, here /hamlet_phylogeny
-# All necessary folders and output files will be created by the script
+# <PATH> corresponds to the path to the base directory, all outputs and necessary
+# folders will be created by the script
 # ------------------------------------------------------------------------------
 
 #SBATCH --partition=rosa.p
@@ -35,5 +35,5 @@ done
 # You can run the following line of code directly on your cluster by copy pasting it
 # and adding #SBATCH options directly in DILS_2pop.sh, after the shebang
 
-DILS_2pop.sh $BASE_DIR/code/yaml/large_small_ser_2pop.yaml
+DILS_2pop.sh $BASE_DIR/data/dils/large_small_ser_2pop.yaml
 

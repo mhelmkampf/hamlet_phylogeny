@@ -1,11 +1,12 @@
 #!/bin/bash
 # by: Floriane Coulmance: 01/12/2023
 # usage:
-# 14_gwas.sh -i <BASE_DIR> -j <JOB_ID>
+# 14_gwas.sh -i <PATH> -j <JOB_ID>
 # ------------------------------------------------------------------------------
-# <BASE_DIR> is the base directory path, here /hamlet_phylogeny
-# All necessary folders and output files will be created by the script
-# <JOB_ID> is the job ID (e.g. jid1) from which you want to resume the pipeline
+# <PATH> corresponds to the path to the base directory, all outputs and necessary
+# folders will be created by the script
+# <JOB_ID> corresponds to ID of the job you want to run this script from within
+# this pipeline/file
 # ------------------------------------------------------------------------------
 
 #SBATCH --partition=rosa.p
@@ -42,7 +43,6 @@ mkdir $BASE_DIR/figures/gxp_clades/
 mkdir $BASE_DIR/figures/gxp_clades/large/
 
 
-
 # ********* Jobs creation *************************
 # -------------------------------------------------
 
@@ -73,7 +73,7 @@ module load BCFtools/1.18-GCC-13.1.0
 INPUT_BI=$BASE_DIR/data/gwas/phyps2e_m2.vcf.gz                   
 
 # Split genotypingg file into 2 for both small & large clades
-bcftools view -Oz -S $BASE_DIR/metadata/large_sample_list \${INPUT_BI} > $BASE_DIR/data/large_phyps2e_m2.vcf.gz
+bcftools view -Oz -S $BASE_DIR/metadata/large_sample_list.txt \${INPUT_BI} > $BASE_DIR/data/large_phyps2e_m2.vcf.gz
 
 
 EOA
@@ -291,7 +291,7 @@ module load R/4.3.1-foss-2023a
 rm $BASE_DIR/outputs/gxp_clades/large/\*.tmp
 
 # Run Rscript for GWAS Manhattan plot 
-Rscript $BASE_DIR/code/R/gxp_plot.R $BASE_DIR/outputs/gxp_clades/large/ $BASE_DIR/figures/gxp_clades/large/
+Rscript $BASE_DIR/figures/Fig3a-b_S12-19_gwas.R $BASE_DIR/outputs/gxp_clades/large/ $BASE_DIR/figures/gxp_clades/large/
 
 
 EOA

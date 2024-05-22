@@ -1,11 +1,12 @@
 #!/bin/bash
 # by: Floriane Coulmance: 17/03/2023
 # usage:
-# sbatch 17_raxml_casz1_cds.sh -i <BASE_DIR> -j <JOB_ID> 
+# sbatch 17_raxml_casz1_cds.sh -i <PATH> -j <JOB_ID> 
 # ------------------------------------------------------------------------------
-# <BASE_DIR> is the base directory path, here /hamlet_phylogeny
-# All necessary folders and output files will be created by the script
-# <JOB_ID> is the job ID (e.g. jid1) from which you want to resume the pipeline
+# <PATH> corresponds to the path to the base directory, all outputs and necessary
+# folders will be created by the script
+# <JOB_ID> corresponds to ID of the job you want to run this script from within
+# this pipeline/file
 # ------------------------------------------------------------------------------
 
 #SBATCH --partition=rosa.p
@@ -74,7 +75,7 @@ module load VCFtools/0.1.16-GCC-13.1.0
 module load BCFtools/1.18-GCC-13.1.0
 
 # Input the all indel genotyping file (hamlets, and outgroups)
-VCF=$BASE_DIR/data/phylo2_all-indel.vcf.gz
+VCF=$BASE_DIR/data/tree/phylo2_all-indel.vcf.gz
 
 
 # Run this job in parallel for all the 23 casz1 exons
@@ -320,7 +321,7 @@ SUP=$BASE_DIR/outputs/casz1_cds_phylo/vcf_casz1_cds/casz1_23exons.raxml.support
 echo \${SUP}
 
 # Run Rscript to plot phylogenetic tree
-Rscript $BASE_DIR/code/R/tree.R $BASE_DIR \${SUP}
+Rscript $BASE_DIR/figures/Fig3c_S10-19.R $BASE_DIR \${SUP}
 
 
 EOA
