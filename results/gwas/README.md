@@ -1,4 +1,4 @@
-This repository contains the 2 output files of the gwas analysis that were used to plot genotype to phenotype associations (Manhattan plots) along the genome and at specific regions of interest (highest association peak zooms).
+This repository contains the 3 output files of the gwas analysis that were used to plot genotype to phenotype associations (Manhattan plots) along the genome and at specific regions of interest (highest association peak zooms).
 
 Content tree:
 <pre>
