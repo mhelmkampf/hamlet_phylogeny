@@ -4,12 +4,13 @@ Numbering is subject to change as paragraphs may move around in the Materials an
 13 – BioGeoBEARS (Aintzane?)
 14 – GWAS (Flo)
 15 – Region-specific trees (Flo)
-16 - HAR phylogeny (to do, Martin)
-17 – RNA-seq counts / DGE (Mel)
-18 – WGCNA (Mel, Alice)
-19 – Splicing (Mel)
-20 – TE analysis (Mel, Iliana)
-21 – Structural variation (Mel)
+16 - Whole-gene casz1 tree (Flo)
+17 - Exons casz1 tree (Flo)
+18 - Concatenated region trees (Flo)
+19 – RNA-seq counts / DGE (Mel)
+20 – WGCNA (Mel, Alice)
+21 – Splicing (Mel)
+22 – TE analysis (Mel, Iliana)
+23 – Structural variation (Mel)
 
 Genome assembly?
-
