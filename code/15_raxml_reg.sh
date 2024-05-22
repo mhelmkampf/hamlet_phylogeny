@@ -72,7 +72,7 @@ module load VCFtools/0.1.16-GCC-13.1.0
 module load BCFtools/1.18-GCC-13.1.0
 
 # Input the all indel genotyping file (hamlets, and outgroups)
-VCF=$BASE_DIR/data/tree/phylo2_all-indel.vcf.gz
+VCF=$BASE_DIR/data/trees/phylo2_all-indel.vcf.gz
 echo \${VCF}
 
 # Input file with list and genomic positions of regions of interest from GWAS
