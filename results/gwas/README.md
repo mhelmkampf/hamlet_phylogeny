@@ -4,5 +4,6 @@ Content tree:
 <pre>
 .
 ├── large.lmm.50k.5k.txt.gz  # gwas result averaged over 50kb sliding windows
+├── large.lmm.10k.1k.txt.gz  # gwas result averaged over 50kb sliding windows
 └── large.lmm.GxP.txt.gz     # gwas snp-by-snp result
 </pre>
