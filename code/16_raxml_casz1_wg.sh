@@ -73,7 +73,7 @@ module load VCFtools/0.1.16-GCC-13.1.0
 module load BCFtools/1.18-GCC-13.1.0
 
 # Input the all indel genotyping file (hamlets, and outgroups)
-VCF=$BASE_DIR/data/tree/phylo2_all-indel.vcf.gz
+VCF=$BASE_DIR/data/trees/phylo2_all-indel.vcf.gz
 
 # Extract Linkage Group (LG), start and end positions corresponding to the gene of interest (casz1)
 ANNO=LG12
