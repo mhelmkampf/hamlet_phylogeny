@@ -321,7 +321,7 @@ SUP=$BASE_DIR/outputs/casz1_cds_phylo/vcf_casz1_cds/casz1_23exons.raxml.support
 echo \${SUP}
 
 # Run Rscript to plot phylogenetic tree
-Rscript $BASE_DIR/figures/Fig3c_S10-19.R $BASE_DIR \${SUP}
+Rscript $BASE_DIR/figures/Fig3c_S10-19_trees.R $BASE_DIR \${SUP}
 
 
 EOA
