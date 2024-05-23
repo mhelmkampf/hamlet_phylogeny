@@ -103,8 +103,6 @@ prep_file <- function(f,path) {
     print("wrong file")
   }
   
-  # print(run_files)
-  # print(head(d))
   return(d)
   
 }
@@ -148,7 +146,7 @@ custom_annoplot_flo <- function (searchLG, xrange, genes_of_interest = cool_gene
   
   print (df_list[[1]]$labelx)
 
-    # Plot the annotation
+  # Plot the annotation
   ggplot2::ggplot() +
     # add outlier area
     ggchicklet:::geom_rrect(data = tibble::tibble(start = start, end = end),
@@ -164,11 +162,6 @@ custom_annoplot_flo <- function (searchLG, xrange, genes_of_interest = cool_gene
     ggplot2::geom_segment(data = (df_list[[1]] %>% dplyr::filter(!strand %in% c("+", "-"))),
                           aes(x = ps, xend = pe, y = yl, yend = yl, group = Parent),
                           lwd = 2, color = clr_genes) +
-    # add exon 
-    # ggchicklet:::geom_rrect(data = df_list[[2]],
-    #                    aes(xmin = ps, xmax = pe, ymin = yl - (width*2.5),
-    #                        ymax = yl + (width*2.5), group = Parent),
-    #                    fill = alpha(clr_genes,.6), lwd = 0.2, r = unit(0.5, 'npc')) +
     # add exon 
     ggplot2::geom_rect(data = df_list[[2]],
                        aes(xmin = ps, xmax = pe, ymin = yl - width*2, ymax = yl + width*2, group = Parent),
@@ -205,8 +198,6 @@ plot_panel_anno_flo <- function(outlier_id, label, lg, start, end,...)  {
     # use same boundaries for all panels
     ggplot2::coord_cartesian(xlim = c(start-window_buffer, end+window_buffer)) +
     # special panel layout for annotation panel
-    # hypogen::theme_hypo() +
-    # theme_classic() +
     ggplot2::theme(panel.grid.major = element_blank(),
                    panel.grid.minor = element_blank(),
                    panel.background = element_blank(),
@@ -231,37 +222,34 @@ plot_panel_anno_flo <- function(outlier_id, label, lg, start, end,...)  {
 }
 
 
-
-
 plot_panel_gxp <- function (lg, start, end, ...) {
   
   # Create gxp plot for 50k windowed GWAS results
   
   ggplot2::ggplot() +
-    # ggchicklet:::geom_rrect(data = tibble(start = start,end = end),
-    #           aes(xmin = start, xmax = end, ymin = -Inf, ymax = Inf),
-    #           # fill = rgb(0.9, 0.9, 0.9, 0.3),
-    #           fill = "#E69F00",
-    #           # color = rgb(0.9, 0.9, 0.9, 0.1),
-    #           # color = "red",
-    #           alpha = 0.15,
-# c(start, rep(end, length(MID_POS) - 1))
-    #           r = unit(0.35, 'npc')) + 
+    # colors the area under the curve & between 2 x-axis coordinates
     geom_ribbon(data = gxp_data2 %>% filter(CHROM == lg, MID_POS >= start, MID_POS <= end),
                 aes(x = MID_POS, y = LOG_P, ymin = 0, ymax = LOG_P/0.20), fill=gxp_clr, alpha=.1) +
+    # add snp-by-snp association points
     geom_point(data = gxp_snp %>% filter(CHROM == lg, MID_POS > start - window_buffer * 1.25, MID_POS < end + window_buffer * 1.25),
                aes(x = MID_POS, y = LOG_P),
                size = 4, stroke = 0.2, color = "darkgray") +
+    # add average over 10kb sliding windows association curve
     geom_line(data = gxp_data2 %>% filter(CHROM == lg, MID_POS > start - window_buffer * 1.25, MID_POS < end + window_buffer * 1.25),
               aes(x = MID_POS, y = LOG_P/0.20, color = RUN),
               size = 3, color = gxp_clr) +
+    # add x-axis coordinates indicating the region of high association and used for phylogenetic tree
     scale_x_continuous(name = lg, position = "bottom", breaks = c(start, end)) +
+    # y-axis esthetics
     scale_y_continuous(name = expression(bolditalic(-log[10](p))), expand = c(0, 0), limits = c(0, 30), sec.axis = sec_axis(~ . * 0.20),breaks = scales::pretty_breaks(n = 4)) +
+    # determine legend looks
     guides(color = guide_legend(keyheight = unit(3,"pt"), keywidth = unit(20, "pt"),
                                 override.aes = list(size = 2))) +
+    # optional
     scale_color_manual(name = "GxP Trait", values = c("black", "#E69F00", gxp_clr)) +
     # use same boundaries for all panels
     ggplot2::coord_cartesian(xlim = c(start-window_buffer, end+window_buffer)) +
+    # general esthetics    
     ggplot2::theme(panel.border = element_blank(),
                   panel.grid.major = element_blank(),
                   panel.grid.minor = element_blank(),
@@ -280,7 +268,7 @@ plot_panel_gxp <- function (lg, start, end, ...) {
                   axis.ticks.y.right = element_line(color = gxp_clr),
                    plot.margin = ggplot2::margin(t = 1, r = 3, b = 3, 
                                                  l = 3), ...)
-  
+
 }
 
 
@@ -299,6 +287,7 @@ plot_curt <- function (outlier_id, outlier_nr, lg, start, end, text = FALSE, lab
   p_curtain <- cowplot::plot_grid(p_g + no_title(), p_gxp + no_title(),
                                     ncol = 1, align = "v", rel_heights = c(1, 0.6), axis="tblr")
   
+  # Save each individual zoom plots
   hypo_save(filename = paste0(figure_path, "/", outlier_id, ".pdf"),
             plot = p_curtain,
             width = 45,
@@ -316,8 +305,7 @@ plot_regions <- function(region, outlier_list, label, path) {
   # Create the plot
   p_single <- region %>% filter(outlier_id %in% outlier_list) %>%
     left_join(label) %>%
-    dplyr::mutate(outlier_nr = row_number()) %>% #, 
-    #text = ifelse(outlier_nr == 1,TRUE,FALSE)) %>%
+    dplyr::mutate(outlier_nr = row_number()) %>% 
     pmap(plot_curt, cool_genes = cool_genes) %>%
     cowplot::plot_grid(plotlist = ., nrow = row, rel_heights = heights,
                        labels = letters[1:length(outlier_list)] %>%
@@ -327,36 +315,6 @@ plot_regions <- function(region, outlier_list, label, path) {
   
 }
 
-
-plot_outlier <- function(x) {
-  tmp <- region_table %>%
-    filter(outlier_id == x)
-  print(tmp)
-  p <- ggplot() +
-    geom_hypo_LG() +
-    geom_rect(data=tmp,
-              inherit.aes=FALSE,
-              aes(xmin = gstart, xmax = gend, ymin = -Inf, ymax = +Inf),
-              # color = "red",
-              fill = "#E69F00",
-              alpha = 0.5) +
-    geom_point(data = gxp_data, aes(x = GPOS, y = LOG_P), size = .001) +
-    scale_fill_hypo_LG_bg() +
-    scale_x_hypo_LG(name = "Linkage Groups") +
-    scale_y_continuous(name = expression(italic('-log(p-value)'))) +
-    theme_hypo() + 
-    theme(legend.position = 'none',
-          axis.title.x = element_text(size = 20),
-          axis.title.y = element_text(size = 20),
-          axis.text.x.top= element_text(colour = 'darkgray', size = 20),
-          axis.text.y= element_text(colour = 'darkgray', size = 20),
-          plot.margin = unit(c(0,0,0,0), "cm"))
-  
-  hypo_save(filename = paste0(figure_path,x,"_gxp_large_gemma_lmm_plots.pdf"),
-            plot = p,
-            width = 40,
-            height = 8)
-}
 
 
 # -------------------------------------------------------------------------------------------------------------------
@@ -371,7 +329,7 @@ plot_outlier <- function(x) {
 gem50lmm <- "large.lmm.50k.5k.txt.gz"
 gxp_data <- prep_file(gem50lmm,data_path)
 
-(p <- ggplot() + #facet_wrap(RUN~., ncol = 1, dir = 'v', strip.position="right") +
+(p <- ggplot() +
      geom_hypo_LG() +
      geom_point(data = gxp_data, aes(x = GPOS, y = LOG_P), size = .9) +
      scale_fill_hypo_LG_bg() +
@@ -446,11 +404,3 @@ heights = c(6, 6)
 
   # Zoomed Manhattan plots 
 p1 <- plot_regions(region_table, outlier_pick, region_label_tibbles, figure_path)
-  
-#   # Save figure
-# hypo_save(filename = paste0(figure_path,"/gxp_large_gemma_lmm_zooms.pdf"),
-#           plot = p1,
-#           width = 100,
-#           height = 35,
-#           limitsize = FALSE)
-
