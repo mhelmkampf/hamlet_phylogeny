@@ -2,8 +2,8 @@
 ### Hamlet phylogeny: R code to plot Fig. 1a, sample map
 ### Created 21 Nov 2023 by Martin Helmkampf
 ### Modified by Floriane Coulmance for final figures
-# usage:
-# Rscript Fig1a_2c_maps.R
+### usage:
+### Rscript Fig1a_2c_maps.R
 ### ============================================================================
 
 
