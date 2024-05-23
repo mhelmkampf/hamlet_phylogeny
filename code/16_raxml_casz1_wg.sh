@@ -200,7 +200,7 @@ SUP=$BASE_DIR/outputs/casz1_wholegene_phylo/vcf_casz1_wholegene/casz1_wholegene.
 echo \${SUP}
 
 # Run Rscript to plot phylogenetic tree
-Rscript $BASE_DIR/figures/Fig3c_S10-19.R $BASE_DIR \${SUP}
+Rscript $BASE_DIR/figures/Fig3c_S10-19_trees.R $BASE_DIR \${SUP}
 
 
 EOA
