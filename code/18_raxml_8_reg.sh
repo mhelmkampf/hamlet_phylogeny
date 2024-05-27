@@ -145,7 +145,7 @@ SUP=$BASE_DIR/outputs/gxp_clades/large/8_regions.raxml.support
 echo \${SUP}
 
 # Run Rscript to plot phylogenetic tree
-Rscript $BASE_DIR/code/R/tree.R $BASE_DIR \${SUP}
+Rscript $BASE_DIR/figures/Fig3c_S10-19_trees.R $BASE_DIR \${SUP}
 
 
 EOA

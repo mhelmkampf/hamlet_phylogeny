@@ -1,11 +1,12 @@
 #!/bin/bash
 # by: Floriane Coulmance: 01/12/2023
 # usage:
-# 15_raxml_reg.sh -i <BASE_DIR> -j <JOB_ID>
+# 15_raxml_reg.sh -i <PATH> -j <JOB_ID>
 # ------------------------------------------------------------------------------
-# <BASE_DIR> is the base directory path, here /hamlet_phylogeny
-# All necessary folders and output files will be created by the script
-# <JOB_ID> is the job ID (e.g. jid1) from which you want to resume the pipeline
+# <PATH> corresponds to the path to the base directory, all outputs and necessary
+# folders will be created by the script
+# <JOB_ID> corresponds to ID of the job you want to run this script from within
+# this pipeline/file
 # ------------------------------------------------------------------------------
 
 #SBATCH --partition=rosa.p
@@ -71,7 +72,7 @@ module load VCFtools/0.1.16-GCC-13.1.0
 module load BCFtools/1.18-GCC-13.1.0
 
 # Input the all indel genotyping file (hamlets, and outgroups)
-VCF=$BASE_DIR/data/phylo2_all-indel.vcf.gz
+VCF=$BASE_DIR/data/trees/phylo2_all-indel.vcf.gz
 echo \${VCF}
 
 # Input file with list and genomic positions of regions of interest from GWAS
@@ -300,7 +301,7 @@ SUP=$BASE_DIR/outputs/gxp_clades/large/\${GEN}_\${START}_\${END}.raxml.support
 echo \${SUP}
 
 # Run Rscript to plot phylogenetic tree
-Rscript $BASE_DIR/code/R/tree.R $BASE_DIR \${SUP}
+Rscript $BASE_DIR/figures/Fig3c_S10-19_trees.R $BASE_DIR \${SUP}
 
 
 EOA
