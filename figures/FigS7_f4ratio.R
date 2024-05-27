@@ -142,11 +142,12 @@ nrow(sign_Dmin) / nrow(trios)
     scale_y_discrete(limits = rev, labels = function(y) str_replace(str_replace(y, "tan", "sp1"), "esp", "sp2")) +
     coord_equal(clip = "off") +
     theme_minimal(base_size = 8) +
-    theme(axis.text.x = element_text(size = 3, hjust = 0, angle = 45),
-          axis.text.y = element_text(size = 3, hjust = 0),
+    theme(axis.text.x = element_text(size = 2.75, hjust = 0, angle = 45, family="mono"),
+          axis.text.y = element_text(size = 2.75, hjust = 0, family="mono"),
           legend.title = element_text(face = "bold", vjust = 5),
           legend.key.size = unit(4, "mm"),
-          panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.5),
+          panel.border = element_rect(colour = "grey20", fill = NA, linewidth = 0.25),
+          panel.grid = element_line(colour = "grey90", linewidth = 0.1),
           plot.margin =  margin(l = 2, b = 15),
           legend.margin = margin(l = 5, r = 2)
     )
@@ -171,11 +172,12 @@ nrow(sign_Dmin) / nrow(trios)
                      labels = function(y) str_replace(str_replace(y, "tan", "sp1"), "esp", "sp2")) +
     coord_equal(clip = "off") +
     theme_minimal(base_size = 8) +
-    theme(axis.text.x = element_text(size = 3, hjust = 0, angle = 45),
-          axis.text.y = element_text(size = 3, hjust = 0),
+    theme(axis.text.x = element_text(size = 2.75, hjust = 0, angle = 45, family="mono"),
+          axis.text.y = element_text(size = 2.75, hjust = 0, family="mono"),
           legend.title = element_text(face = "bold", vjust = 5),
           legend.key.size = unit(4, "mm"),
-          panel.border = element_rect(colour = "black", fill = NA, linewidth = 0.5),
+          panel.border = element_rect(colour = "grey20", fill = NA, linewidth = 0.25),
+          panel.grid = element_line(colour = "grey90", linewidth = 0.1),
           plot.margin =  margin(l = 2, b = 15),
           legend.margin = margin(l = 5, r = 2)
     )
