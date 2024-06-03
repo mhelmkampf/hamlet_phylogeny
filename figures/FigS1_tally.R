@@ -58,7 +58,7 @@ order_loc <- samplesSL %>%
     Location %in% east_carib ~ "Eastern Caribbean")) %>%
   dplyr::count(Location, Region) %>%
   group_by(Region) %>%
-  arrange(match(Region, c("Caribbean", "Atlantic", "Gulf of Mexico")), desc(n)) %>%
+  arrange(match(Region, c("Western Caribbean", "Eastern Caribbean", "Gulf of Mexico")), desc(n)) %>%
   pull(Location)
 
 

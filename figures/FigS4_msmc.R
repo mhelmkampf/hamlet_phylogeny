@@ -89,7 +89,7 @@ large <- c(subset(colstandard$Species, !(colstandard$Species %in% small)), "cas"
   filter(!time_index %in% c(0:4, 27:31)) %>%   # remove the two first and last time segments
   ggplot(aes(x = YBP, y = Ne, group = run_nr, color = spec)) +
   geom_line(linewidth = 0.5) +
-  annotation_logticks(sides = "tl", color = "lightgray", size = plot_lwd) +   # add guides for the logarithmic axes
+  annotation_logticks(sides = "tl", color = "lightgray", linewidth = 0.5) +   # add guides for the logarithmic axes
   scale_color_manual(values = colstandard$Color, labels = spn_labels) +
   scale_x_log10(expand = c(0, 0),
                 breaks = c(10^3, 10^4, 10^5),
@@ -124,7 +124,7 @@ cc_filt <- cc_data %>%
 (p_cc <- cc_filt %>%
   ggplot(aes(x = YBP, y = Cross_coal, group = run_nr, color = comp)) +
   geom_line(linewidth = 0.6, alpha = 0.3) +
-  annotation_logticks(sides = "b", color = "lightgray", size = plot_lwd) +
+  annotation_logticks(sides = "b", color = "lightgray", linewidth = 0.5) +
   scale_color_manual(values = c("darkgreen", "peru", "purple")) +
   scale_x_log10(expand = c(0, 0),
                 labels = scales::trans_format("log10", scales::math_format(10^.x))) +
