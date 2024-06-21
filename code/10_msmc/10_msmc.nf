@@ -110,7 +110,6 @@ process split_vcf_by_individual {
 process bam_caller {
     label 'L_36g47h_bam_caller'
     publishDir "masks", mode: 'copy' , pattern: "*.coverage_mask.bed.gz"
-    // conda "$HOME/miniconda2/envs/py3"
 
     input:
     set val( id ), val( lg ), file( bam ), val( depth ), file( vcf ) from sample_vcf
@@ -156,14 +155,14 @@ process generate_segsites {
 }
 
 // git 8.12
-// Assign samples randomly across MSMC and cross coalescence runs
+// Assign samples randomly across MSMC and cross coalescence runs (R script)
 process msmc_sample_grouping {
     label "L_loc_msmc_grouping"
     publishDir "setup", mode: 'copy'
 
     output:
-    file( "msmc_grouping_phylo2e-n3.txt" ) into msmc_grouping
-    file( "msmc_grouping_phylo2e_cc-m2.txt" ) into cc_grouping
+    file( "Ne_grouping_phylo2e_n3.txt" ) into msmc_grouping
+    file( "cc_grouping_phylo2e_gom.txt" ) into cc_grouping
 
     script:
     """
@@ -171,11 +170,9 @@ process msmc_sample_grouping {
 
     base="\$WORK/demo/msmc"
 
-    Rscript --vanilla \$base/R/sample_assignment_msmc_mh.R \
+    Rscript --vanilla \$base/R/sample_assignment_msmc_gom.R \
            \$base/R/distribute_samples_msmc_and_cc.R \
-           \$base/R/cross_cc.R \
-           \$base/R/sample_info_phylo2e.txt \
-           msmc
+           \$base/R/cross_cc.R
    """
 }
 
@@ -357,14 +354,12 @@ process cc_run {
     script:
     """
     infiles=\$( echo ${hetsep} )
-    pop1=\$( echo "${samples_1}" | sed 's/\\[//g; s/, /,/g; s/\\]//g' )
-    pop2=\$( echo "${samples_2}" | sed 's/\\[//g; s/, /,/g; s/\\]//g' )
 
     msmc2-linux \
         -t 32 \
         -m 0.00255 \
         -p 1*2+25*1+1*2+1*3 \
-        -o cc_run.${cc_run}.${spec1[0]}.cc \
+        -o cc_run.${cc_run}.${spec1[0]} \
         -I 0,1,2,3 \
         \${infiles}
 
@@ -372,7 +367,7 @@ process cc_run {
         -t 32 \
         -m 0.00255 \
         -p 1*2+25*1+1*2+1*3 \
-        -o cc_run.${cc_run}.${spec2[0]}.cc \
+        -o cc_run.${cc_run}.${spec2[0]} \
         -I 4,5,6,7 \
         \${infiles}
 
@@ -380,14 +375,14 @@ process cc_run {
         -t 32 \
         -m 0.00255 \
         -p 1*2+25*1+1*2+1*3 \
-        -o cc_run.${cc_run}.cross.cc \
+        -o cc_run.${cc_run}.${spec1[0]}-${spec2[0]}.cross \
         -I 0,1,2,3,4,5,6,7 \
         \${infiles}
 
     combineCrossCoal.py \
-        cc_run.${cc_run}.cross.msmc.final.txt \
-        cc_run.${cc_run}.${spec1[0]}.msmc.final.txt \
-        cc_run.${cc_run}.${spec2[0]}.msmc.final.txt \
-    > cc_run.${cc_run}.combined.final.txt
+        cc_run.${cc_run}.${spec1[0]}-${spec2[0]}.cross.final.txt \
+        cc_run.${cc_run}.${spec1[0]}.final.txt \
+        cc_run.${cc_run}.${spec2[0]}.final.txt \
+    > cc_run.${cc_run}.${spec1[0]}-${spec2[0]}.combined.final.txt
     """
 }
