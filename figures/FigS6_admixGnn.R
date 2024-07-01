@@ -204,10 +204,21 @@ rcol <- as_tibble(order) %>%
 )
 
 
+### Annotate panels
+(p_anno <- p_comb + 
+  draw_plot_label(label = c("A", "B"), 
+                  x = c(0.95, 0.95), 
+                  y = c(0.988, 0.603), 
+                  hjust = -0.5, 
+                  vjust = 1.5, 
+                  size = 12)
+)
+
+
 ### Save as PDF
 ggsave(
   filename = "figures/FigS6_admixGnn.pdf",
-  plot = p_comb,
+  plot = p_anno,
   width = 20,
   height = 11,
   units = "cm",
