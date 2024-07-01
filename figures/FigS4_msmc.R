@@ -146,8 +146,9 @@ cc_filt <- cc_data %>%
 ### Combine panels
 (p_comb <- p_Ne /
   p_cc  +
-  plot_annotation(tag_levels = c("a")) &
-  theme(panel.grid.major = element_line(linewidth = plot_lwd)
+  plot_annotation(tag_levels = c("A")) &
+  theme(panel.grid.major = element_line(linewidth = 0.5),
+        plot.tag = element_text(face = "bold")
   )
 )
 

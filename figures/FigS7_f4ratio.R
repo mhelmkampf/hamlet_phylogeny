@@ -187,7 +187,8 @@ nrow(sign_Dmin) / nrow(trios)
 ### Combine panels
 (f_comb <- fb /
     fd  +
-    plot_annotation(tag_levels = c("a"))
+    plot_annotation(tag_levels = c("A")) &
+    theme(plot.tag = element_text(face = "bold"))
 )
 
 
