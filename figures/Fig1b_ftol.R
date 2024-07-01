@@ -44,15 +44,15 @@ rooted$tip.label <- rooted$tip.label %>%
   str_replace(pattern = "FL0880ransan", "H. randallorum") %>%
   str_replace(pattern = "PL17_72tanpri", "H. sp. (tan)") %>%
   str_replace(pattern = "PL17_136uniflk", "H. unicolor") %>%
-  str_replace(pattern = "20480tabhon", "Se. tabacarius") %>%
-  str_replace(pattern = "PL17_21tigboc", "Se. tigrinus") %>%
-  str_replace(pattern = "Bocas16.3torboc", "Se. tortugarum") %>% 
+  str_replace(pattern = "20480tabhon", "Serranus tabacarius") %>%
+  str_replace(pattern = "PL17_21tigboc", "Serranus tigrinus") %>%
+  str_replace(pattern = "Bocas16.3torboc", "Serranus tortugarum") %>%
 #
-  str_replace(pattern = "([A-Z])([a-z])[a-z]*_([a-z]*)", "\\1\\2. \\3") %>%
-  str_replace(pattern = "Za.", "Pl.") %>%
-  str_replace(pattern = "Hy.", "H.") %>% 
-  str_replace(pattern = "Di.", "D.") %>% 
-  str_replace(pattern = "Ep.", "E.")
+  str_replace(pattern = "_", " ")
+  # str_replace(pattern = "Za.", "Pl.") %>%
+  # str_replace(pattern = "Hy.", "H.") %>% 
+  # str_replace(pattern = "Di.", "D.") %>% 
+  # str_replace(pattern = "Ep.", "E.")
 
 
 ### Identify long branches (requires ggtree object index)
@@ -67,7 +67,7 @@ longg <- which(tree_data$branch.length > mean(tree_data$branch.length) * 10)
 
 ### Define groups
 hamlets <- rooted$tip.label[grepl(pattern = "H. ", rooted$tip.label)]
-our_taxa <- c(hamlets, "Se. tabacarius", "Se. tigrinus", "Se. tortugarum")
+our_taxa <- c(hamlets, "Serranus tabacarius", "Serranus tigrinus", "Serranus tortugarum")
 
 
 ### Add species / location labels and support categories
@@ -96,9 +96,9 @@ clr_neutral <- rgb(0.2, 0.2, 0.2)
                  )) +
   geom_tiplab(aes(color = group, label = if_else(label %in% our_taxa, str_c(label,"*"), label)),   # add asterisks to our taxa
               size = 3.5, 
-              hjust = -0.1,
+              hjust = -0.05,
               fontface = "italic") +
-  ggplot2::xlim(0, 0.17) +   # add extra space for long labels
+  ggplot2::xlim(0, 0.19) +   # add extra space for long labels
   geom_nodepoint(aes(fill = support_class,
                      size = support_class),
                      shape = 21) +
@@ -143,6 +143,6 @@ clr_neutral <- rgb(0.2, 0.2, 0.2)
 ggsave(plot = t,
        filename = "figures/Fig1b_ftol.pdf",
        width = 8,
-       height = 6,
+       height = 6.5,
        device = cairo_pdf,
        bg = "transparent")
