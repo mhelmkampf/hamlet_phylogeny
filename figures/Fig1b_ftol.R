@@ -25,25 +25,25 @@ rooted <- root(phy = phylo, outgroup = "Epinephelus_maculatus", edgelabel = TRUE
 
 ### Edit tip labels
 rooted$tip.label <- rooted$tip.label %>% 
-  str_replace(pattern = "PL17_88abebel", "H. aberrans") %>%
-  str_replace(pattern = "19174affgun", "H. affinis") %>%
-  str_replace(pattern = "54786atlliz", "H. atlahua") %>%
-  str_replace(pattern = "54649casliz", "H. castroaguirrei") %>%
-  str_replace(pattern = "PL17_38chlpri", "H. chlorurus") %>%
-  str_replace(pattern = "62576ecoarc", "H. ecosur") %>%
-  str_replace(pattern = "62558floarc", "H. floridae") %>%
-  str_replace(pattern = "62570gemarc", "H. gemma") %>%
-  str_replace(pattern = "23301gumboc", "H. gummigutta") %>%
-  str_replace(pattern = "19076gutbar", "H. guttavarius") %>%
-  str_replace(pattern = "PL17_64indpri", "H. indigo") %>%
-  str_replace(pattern = "HypoHaiti1libhai", "H. liberte") %>%
-  str_replace(pattern = "PL17_122maybel", "H. maya") %>%
-  str_replace(pattern = "18906nigboc", "H. nigricans") %>%
-  str_replace(pattern = "20650prohon", "H. providencianus") %>%
-  str_replace(pattern = "19104puegun", "H. puella") %>%
-  str_replace(pattern = "FL0880ransan", "H. randallorum") %>%
-  str_replace(pattern = "PL17_72tanpri", "H. sp. (tan)") %>%
-  str_replace(pattern = "PL17_136uniflk", "H. unicolor") %>%
+  str_replace(pattern = "PL17_88abebel", "Hypoplectrus aberrans") %>%
+  str_replace(pattern = "19174affgun", "Hypoplectrus affinis") %>%
+  str_replace(pattern = "54786atlliz", "Hypoplectrus atlahua") %>%
+  str_replace(pattern = "54649casliz", "Hypoplectrus castroaguirrei") %>%
+  str_replace(pattern = "PL17_38chlpri", "Hypoplectrus chlorurus") %>%
+  str_replace(pattern = "62576ecoarc", "Hypoplectrus ecosur") %>%
+  str_replace(pattern = "62558floarc", "Hypoplectrus floridae") %>%
+  str_replace(pattern = "62570gemarc", "Hypoplectrus gemma") %>%
+  str_replace(pattern = "23301gumboc", "Hypoplectrus gummigutta") %>%
+  str_replace(pattern = "19076gutbar", "Hypoplectrus guttavarius") %>%
+  str_replace(pattern = "PL17_64indpri", "Hypoplectrus indigo") %>%
+  str_replace(pattern = "HypoHaiti1libhai", "Hypoplectrus liberte") %>%
+  str_replace(pattern = "PL17_122maybel", "Hypoplectrus maya") %>%
+  str_replace(pattern = "18906nigboc", "Hypoplectrus nigricans") %>%
+  str_replace(pattern = "20650prohon", "Hypoplectrus providencianus") %>%
+  str_replace(pattern = "19104puegun", "Hypoplectrus puella") %>%
+  str_replace(pattern = "FL0880ransan", "Hypoplectrus randallorum") %>%
+  str_replace(pattern = "PL17_72tanpri", "Hypoplectrus sp. (tan)") %>%
+  str_replace(pattern = "PL17_136uniflk", "Hypoplectrus unicolor") %>%
   str_replace(pattern = "20480tabhon", "Serranus tabacarius") %>%
   str_replace(pattern = "PL17_21tigboc", "Serranus tigrinus") %>%
   str_replace(pattern = "Bocas16.3torboc", "Serranus tortugarum") %>%
@@ -66,7 +66,7 @@ longg <- which(tree_data$branch.length > mean(tree_data$branch.length) * 10)
 
 
 ### Define groups
-hamlets <- rooted$tip.label[grepl(pattern = "H. ", rooted$tip.label)]
+hamlets <- rooted$tip.label[grepl(pattern = "Hypoplectrus", rooted$tip.label)]
 our_taxa <- c(hamlets, "Serranus tabacarius", "Serranus tigrinus", "Serranus tortugarum")
 
 
