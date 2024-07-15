@@ -18,7 +18,7 @@ args = commandArgs(trailingOnly=FALSE)
 args = args[7:8]
 
 # Uncomment to run from RStudio console:
-# args <- c('R/distribute_samples_msmc_and_cc.R', 'R/cross_cc.R')
+args <- c("R/distribute_samples_msmc_and_cc.R", "R/cross_cc.R")
 
 distr_script <- as.character(args[1])
 cross_script <- as.character(args[2])
@@ -39,7 +39,7 @@ set.seed(27678)
 samples <- read_tsv(file = "../../metadata/samples_ids.txt", col_names = "label") %>%
   mutate(spec = str_sub(label, -6, -4),
          geo = str_sub(label, -3, -1)) %>% 
-  filter(!(spec %in% c('tor','tab','tig'))
+  filter(!(spec %in% c("tor","tab","tig"))
   )
 
 group_layout <- tibble(n = 1:12,
@@ -69,7 +69,7 @@ msmc_grouping <- group_sizes %>%
   select(msmc_run, spec:group_nr, group_size, samples)
 
 
-write_delim(x = msmc_grouping, file = str_c('Ne_grouping_phylo2e_n3.txt'), delim = '\t')
+write_delim(x = msmc_grouping, file = str_c("Ne_grouping_phylo2e_n3.tsv"), delim = "\t")
 
 
 
@@ -102,7 +102,7 @@ cc_grouping <- group_sizes_cc %>%
 
 
 cc_samples <- cc_grouping %>%
-  mutate(id = str_c(spec, '_', geo,'_', group_nr)) %>%
+  mutate(id = str_c(spec, "_", geo,"_", group_nr)) %>%
   select(id, samples)
 
 
@@ -114,19 +114,19 @@ cc_tibbles <- cc_grouping %>%
   filter(n_sp > 2) %>%   # remove locations with only 1 species
   summarise(content = list(tibble(spec = spec, n = n))) %>%
   bind_cols(., .$content %>% map(paste_groups_cc) %>% tibble) %>%
-  setNames(., nm = c('geo', 'content', 'contrasts'))
+  setNames(., nm = c("geo", "content", "contrasts"))
 
 
 cc_output <- cc_tibbles %>%
   select(-content) %>%
   pmap(spread_tibble_cc) %>%
   bind_rows() %>%
-  mutate(id1 = str_c(spec_1, '_', geo, '_', group_1),
-         id2 = str_c(spec_2, '_', geo, '_', group_2)) %>%
-  left_join(., cc_samples %>% set_names(., nm = c('id1','samples_1')))%>%
-  left_join(., cc_samples %>% set_names(., nm = c('id2','samples_2'))) %>%
+  mutate(id1 = str_c(spec_1, "_", geo, "_", group_1),
+         id2 = str_c(spec_2, "_", geo, "_", group_2)) %>%
+  left_join(., cc_samples %>% set_names(., nm = c("id1","samples_1")))%>%
+  left_join(., cc_samples %>% set_names(., nm = c("id2","samples_2"))) %>%
   mutate(run_nr = row_number()) %>%
   select(run_nr, geo, spec_1, spec_2, contrast_nr, samples_1, samples_2)
 
 
-write_delim(x = cc_output, file = "cc_grouping_phylo2e_gom.txt", delim = '\t')
+write_delim(x = cc_output, file = "cc_grouping_phylo2e_gom.tsv", delim = "\t")

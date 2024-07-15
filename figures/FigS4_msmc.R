@@ -19,8 +19,8 @@ cc_path <- "results/msmc/cc/"
 
 
 ### Read in grouping files
-Ne_grouping <- read_tsv("data/msmc/msmc_grouping_phylo2e-n3.tsv")
-cc_grouping <- read_tsv("data/msmc/cc_phylo2e_gom.tsv")
+Ne_grouping <- read_tsv("data/msmc/Ne_grouping_phylo2e_n3.tsv")
+cc_grouping <- read_tsv("data/msmc/cc_grouping_phylo2e_gom.tsv")
 
 
 ### Locate results
@@ -86,7 +86,7 @@ large <- c(subset(colstandard$Species, !(colstandard$Species %in% small)), "cas"
 
 ### Plot Ne
 (p_Ne <- Ne_data %>%
-  filter(!time_index %in% c(0:4, 27:31)) %>%   # remove the two first and last time segments
+  filter(!time_index %in% c(0:4, 27:31)) %>%   # remove the first five and last five time segments
   ggplot(aes(x = YBP, y = Ne, group = run_nr, color = spec)) +
   geom_line(linewidth = 0.5) +
   annotation_logticks(sides = "tl", color = "lightgray", linewidth = 0.5) +   # add guides for the logarithmic axes

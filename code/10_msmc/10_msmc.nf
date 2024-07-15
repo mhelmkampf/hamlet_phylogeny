@@ -161,8 +161,8 @@ process msmc_sample_grouping {
     publishDir "setup", mode: 'copy'
 
     output:
-    file( "Ne_grouping_phylo2e_n3.txt" ) into msmc_grouping
-    file( "cc_grouping_phylo2e_gom.txt" ) into cc_grouping
+    file( "Ne_grouping_phylo2e_n3.tsv" ) into msmc_grouping
+    file( "cc_grouping_phylo2e_gom.tsv" ) into cc_grouping
 
     script:
     """
