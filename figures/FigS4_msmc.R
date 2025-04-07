@@ -1,5 +1,5 @@
 ### ============================================================================
-### Hamlet phylogeny: R code to plot Fig. Sx (Ne and cross coalescence rates)
+### Hamlet phylogeny: R code to plot Fig. S4 (Ne and cross coalescence rates)
 ### Created Mar 2024 by Martin Helmkampf
 ### ============================================================================
 
@@ -76,7 +76,6 @@ colstandard <- read_tsv("metadata/species_colors.tsv",
 # Define replacement labels
 spn_labels <- colstandard$Species
 spn_labels[which(spn_labels == "tan")] <- "sp1"
-spn_labels[which(spn_labels == "esp")] <- "sp2"
 
 
 ### Define groups

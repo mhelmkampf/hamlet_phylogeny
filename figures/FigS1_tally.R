@@ -87,7 +87,7 @@ sum <- textGrob(sum(counts$n), gp = gpar(fontsize = 12, fontface = "bold"))
   scale_color_manual(values = rev(scol$Color)) +
   scale_size_area(max_size = 11) +
   scale_y_discrete(labels = function(x) {
-      ifelse(x == "tan", "sp1", ifelse(x == "esp", "sp2", x))
+      ifelse(x == "tan", "sp1", x)
     }) +
   coord_cartesian(clip = "off") +
   labs(title = NULL, x = NULL, y = NULL) +

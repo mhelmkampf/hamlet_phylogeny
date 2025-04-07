@@ -39,8 +39,8 @@ long2 <- pivot_longer(admix2, cols = starts_with("X"),
                       values_to = "Proportion")
 
 
-### Order samples by ancestry proportions
-order <- long2 %>%
+### ord_sp samples by ancestry proportions
+ord_sp <- long2 %>%
   filter(Ancestry == "X3") %>%
   arrange(desc(Proportion)) %>%
   pull(Sample)
@@ -49,13 +49,14 @@ order <- long2 %>%
 ### Plot admixture proportions
 (pa <- long2 %>%
     mutate(Sample = factor(Sample, levels = unique(Sample))) %>%
-    ggplot(aes(x = fct_relevel(Sample, order), y = Proportion, fill = Ancestry)) +
+    ggplot(aes(x = fct_relevel(Sample, ord_sp), y = Proportion, fill = Ancestry)) +
     geom_bar(position = "fill", stat = "identity", alpha = 0.9) +
     labs(x = NULL,
          y = "Ancestry proportions") +
     scale_fill_manual(values = c("#377EB8", "#E41A1C")) +
     theme_minimal(base_size = 10) +
-    theme(panel.grid.minor = element_blank(),
+    theme(text = element_text(color = "grey20"),
+          panel.grid.minor = element_blank(),
           panel.grid.major.x = element_blank(),
           axis.title.y = element_text(margin = unit(c(0, 5, 0, 0), "mm")),
           axis.text.x = element_blank(),
@@ -103,17 +104,18 @@ longg <- pivot_longer(per_sample,
   select(-c("Haplotype", "GNN_small", "GNN_large"))
 
 
-### Plot GNN proportions (ordered as by Admixture ancestry proportions)
+### Plot GNN proportions (ord_sped as by Admixture ancestry proportions)
 (pg <- longg %>%
     arrange(GNN_clade, Proportion) %>%
     mutate(Sample = factor(Sample, levels = unique(Sample))) %>%
-    ggplot(aes(x = fct_relevel(Sample, order), y = Proportion, fill = GNN_clade)) +
+    ggplot(aes(x = fct_relevel(Sample, ord_sp), y = Proportion, fill = GNN_clade)) +
     geom_bar(position = "fill", stat = "identity", alpha = 0.9) +
     labs(x = NULL,
          y = "GNN proportions") +
     scale_fill_manual(values = c("peru", "#837ABE")) +
     theme_minimal(base_size = 10) +
-    theme(panel.grid.minor = element_blank(),
+    theme(text = element_text(color = "grey20"),
+          panel.grid.minor = element_blank(),
           panel.grid.major.x = element_blank(),
           axis.title.y = element_text(margin = unit(c(0, 5, 0, 0), "mm")),
           axis.text.x = element_blank(),
@@ -128,9 +130,9 @@ longg <- pivot_longer(per_sample,
 
 
 ### Create species color table
-scol <- as_tibble(order) %>%
+scol <- as_tibble(ord_sp) %>%
   rename(Sample = value) %>%
-  mutate(Position = seq(1:length(order)),
+  mutate(Position = seq(1:length(ord_sp)),
          Species = str_sub(Sample, -6, -4)) %>%
   left_join(., colstandard, by = join_by(Species))
 
@@ -139,17 +141,17 @@ scol <- as_tibble(order) %>%
 (s <- ggplot(scol, aes(xmin = Position, xmax = Position + 1, 
                        ymin = -Inf, ymax = Inf)) +
     geom_rect(aes(fill = Species)) +
-    scale_x_discrete(breaks = seq(1:length(order))) +
+    scale_x_discrete(breaks = seq(1:length(ord_sp))) +
     scale_y_continuous(breaks = .5, limits = c(0, 1)) +
     scale_fill_manual(values = colstandard$Color) +
     labs(x = NULL, 
          y = "Species") +
     theme_minimal() +
-    theme(panel.grid = element_blank(),
+    theme(text = element_text(color = "grey20"),
+          panel.grid = element_blank(),
           axis.title.x = element_blank(),
           axis.title.y = element_text(angle = 0, vjust = 0.5,
-                                      color = "gray20", size = 10,
-                                      margin = margin(r = 0)),
+                                      size = 10, margin = margin(r = 0)),
           axis.ticks = element_blank(),
           axis.text = element_blank(),
           legend.position = "none",
@@ -158,10 +160,10 @@ scol <- as_tibble(order) %>%
 )
 
 
-### Create species color table
-rcol <- as_tibble(order) %>%
+### Create region color table
+rcol <- as_tibble(ord_sp) %>%
   rename(Sample = value) %>%
-  mutate(Position = seq(1:length(order)),
+  mutate(Position = seq(1:length(ord_sp)),
          Location = str_sub(Sample, -3, -1),
          Region = case_when(
            Location %in% gulf ~ "Gulf of Mexico",
@@ -174,18 +176,18 @@ rcol <- as_tibble(order) %>%
 (r <- ggplot(rcol, aes(xmin = Position, xmax = Position + 1, 
                        ymin = -Inf, ymax = Inf)) +
     geom_rect(aes(fill = Region)) +
-    scale_x_discrete(breaks = seq(1:length(order))) +
+    scale_x_discrete(breaks = seq(1:length(ord_sp))) +
     scale_y_continuous(breaks = .5, limits = c(0, 1)) +
     scale_fill_manual(breaks = c("Gulf of Mexico", "Western Caribbean", "Eastern Caribbean"),
                       values = c("coral2", "royalblue1", "olivedrab4")) +
     labs(x = NULL, 
          y = "Region") +
     theme_minimal() +
-    theme(panel.grid = element_blank(),
+    theme(text = element_text(color = "grey20"),,
+          panel.grid = element_blank(),
           axis.title.x = element_blank(),
           axis.title.y = element_text(angle = 0, vjust = 0.5,
-                                      color = "gray20", size = 10,
-                                      margin = margin(r = 0)),
+                                      size = 10, margin = margin(r = 0)),
           axis.ticks = element_blank(),
           axis.text = element_blank(),
           legend.position = "none",
@@ -211,7 +213,8 @@ rcol <- as_tibble(order) %>%
                   y = c(0.988, 0.603), 
                   hjust = -0.5, 
                   vjust = 1.5, 
-                  size = 12)
+                  size = 12,
+                  color = "grey20")
 )
 
 
