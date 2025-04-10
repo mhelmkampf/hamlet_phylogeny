@@ -6,7 +6,6 @@
 
 ### Preparations
 library(tidyverse)
-library(RColorBrewer)
 library(cowplot)
 
 # Set path to root directory of git repository "hamlet_phylogeny"
@@ -32,18 +31,14 @@ order_sp <- c(gulf_sp, both_sp, caribbean_sp)
 admix_data <- map(2:8, function(k) {
   read_delim(paste0("results/admix/AdmcvProp_phyps2e_m2n1l5_k", k, ".tsv"), delim = " ", col_names = "Sample") %>%
     mutate(Species = str_sub(Sample, -6, -4),
-           Location = str_sub(Sample, -3, -1),
-           Region = case_when(
-             Location %in% gulf ~ "Gulf of Mexico",
-             Location %in% west_carib ~ "Western Caribbean",
-             Location %in% east_carib ~ "Eastern Caribbean")) %>%
+           Location = str_sub(Sample, -3, -1)) %>%
     pivot_longer(cols = starts_with("X"), names_to = "Ancestry", values_to = "Proportion") %>%
     mutate(k = k)
 })
 
 
 ### Generate ordered sample list
-samples <- admix_data[[1]] %>% distinct(Sample, Species, Location, Region)
+samples <- admix_data[[1]] %>% distinct(Sample, Species, Location)
 samples$Species <- factor(samples$Species, levels = order_sp)
 ord_sp <- samples[order(samples$Species, samples$Location), ] %>% pull(Sample)
 
@@ -149,7 +144,7 @@ cv_error <- data.frame(
     scale_x_continuous(breaks = 1:12) +
     labs(x = "k",
          y = NULL,
-         tag = "CV value") +
+         tag = "CV error") +
     theme_minimal(base_size = 11) +
     theme(text = element_text(color = "grey20"),
           panel.grid.minor = element_blank(),
@@ -170,7 +165,10 @@ cv_error <- data.frame(
 
 
 ### Save as PDF
-ggsave("figures/FigS9_admixk2-8.pdf", plot = p_comb, width = 20, height = 30, units = "cm", device = cairo_pdf)
+ggsave("figures/FigS9_admixk2-8.pdf", plot = p_comb, width = 20, height = 26, units = "cm", device = cairo_pdf)
+
+### Save as PNG
+ggsave("figures/FigS9_admixk2-8.png", plot = p_comb, width = 20, height = 26, units = "cm", device = png)
 
 
 
