@@ -132,9 +132,6 @@
 20430ranhon
 20433abehon
 20435chlhon
-20478tabhon
-20480tabhon
-20481tighon
 20551puehon
 20552puehon
 20553puehon
@@ -207,7 +204,6 @@
 27936atltam
 28366gumboc
 28389abeboc
-28393torboc
 28713puequi
 28939puequi
 29137nigqui
@@ -246,8 +242,6 @@
 62585esparc
 62948puearc
 62953puearc
-Bocas16.3torboc
-Bocas16.4torboc
 FL0318indpri
 FL0324tanpri
 FL0331chlpri
@@ -287,7 +281,6 @@ PL17_155pueflk
 PL17_157pueflk
 PL17_159pueflk
 PL17_160floflk
-PL17_21tigboc
 PL17_23tanpri
 PL17_35indpri
 PL17_37chlpri
@@ -332,4 +325,3 @@ PL17_98indbel
 Ross1gemare
 Ross2abeare
 Ross3pueare
-s_tort_3torboc

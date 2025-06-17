@@ -1,4 +1,4 @@
-The following VCF files have been deposited at the European Variation Archive (https://www.ebi.ac.uk/eva/?Home) under study accession number PRJEB75494. All dataset contain bi-allelic SNPs only, filtered by missing data (max 10 %) and various quality metrics.
+The following VCF files have been deposited at Dryad (https://datadryad.org) under study accession number xxx. All dataset contain bi-allelic SNPs only, filtered by missing data (max 10 %) and various quality metrics.
 
 Datasets prefixed 'phyps' were genotyped using hamlet (genus *Hypoplectrus*) sequencing data only, those prefixed 'phylo' were genotyped using hamlet (genus *Hypoplectrus*) and outgroup (genus *Serranus*) sequencing data. Additional filters are described below.
 

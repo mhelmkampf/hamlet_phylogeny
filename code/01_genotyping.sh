@@ -1,7 +1,8 @@
-### ============================================================================
-### phylo2
-### Data compilation and genotyping (GATK)
-### ============================================================================
+### ================================================================================
+### Radiation with reproductive isolation in the near-absence of phylogenetic signal
+### 01. Data compilation and genotyping (GATK)
+### By Martin Helmkampf, last edited 2025-06-17
+### ================================================================================
 
 ### Preparations
 
@@ -29,16 +30,16 @@ cd $BASE
 # wgs17 samples were chosen in R/choose_wgs17_phylo2.R, including:
 
 # all in $DATA/shared/1_rawdata/wgs_12 (107 individuals, 218 files -- 2 in duplicate)
-ln -s /nfs/data/haex1482/shared/1_rawdata/wgs_12/* .
+ln -s $DATA/shared/1_rawdata/wgs_12/* .
 
 # select samples in $DATA/shared/1_rawdata/wgs_3 (48 individuals, 96 files)
 while read SAMPLE
 do
-  ln -s /nfs/data/haex1482/shared/1_rawdata/wgs_3/${SAMPLE}* .
+  ln -s $DATA/shared/1_rawdata/wgs_3/${SAMPLE}* .
 done < wgs_3.ids
 
 # all in $DATA/shared/1_rawdata/wgs_456 (21 individuals, 42 files)
-ln -s /nfs/data/haex1482/shared/1_rawdata/wgs_456/* .
+ln -s $DATA/shared/1_rawdata/wgs_456/* .
 
 # select samples in /nfs/data/doau0129/GxP (56 individuals, 112 files)
 while read SAMPLE
@@ -50,7 +51,7 @@ done < wgs_gxp.ids
 ln -s /nfs/data/doau0129/phylo2/phylo2_raw/*.gz .
 rm *S135*
 
-# Additional samples by Betancur downloaded from ENA and SRA (6 individuals, 12 files) *** 7 individuals?
+# Additional samples by RBR downloaded from ENA and SRA (6 individuals, 12 files)
 # FL0835 SRR17839752 pro san
 # FL0331 SRR18184334 chl pri
 # FL0880 SRR17839729 ran san
@@ -72,7 +73,7 @@ ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 ml SAMtools/1.9-GCC-8.3.0
 ml BWA/0.7.17-GCC-8.3.0
 
-gzip -dc /nfs/data/haex1482/shared/2_refdata/Hpue_genome_unmasked_01.fas.gz > $BASE/ref/Hpue_genome_unmasked_01.fasta
+gzip -dc $DATA/shared/2_refdata/Hpue_genome_unmasked_01.fas.gz > $BASE/ref/Hpue_genome_unmasked_01.fasta
 bwa index $BASE/ref/Hpue_genome_unmasked_01.fasta
 gatk CreateSequenceDictionary -R $BASE/ref/Hpue_genome_unmasked_01.fasta
 samtools faidx $BASE/ref/Hpue_genome_unmasked_01.fasta
@@ -104,13 +105,11 @@ done
 #SBATCH --time=0-01:30  # D-HH:MM
 #SBATCH --output=log/1_ubam/1_ubam_%A_%a.out
 #SBATCH --error=log/1_ubam/1_ubam_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 META=$BASE/../0_metadata/metadata_phylo2.csv
 LINES=$(head $META -n $SLURM_ARRAY_TASK_ID | tail -n 1)
 IFS="," read FWD REV SAMPLE READGROUP LIBRARY PLATFORM MODEL <<< $LINES
@@ -146,13 +145,11 @@ cd $BASE/out/1_ubam ; find *_ubam.bam > $BASE/fofn/1_ubam.fofn
 #SBATCH --time=0-01:30  # D-HH:MM
 #SBATCH --output=log/2_adap/2_adap_%A_%a.out
 #SBATCH --error=log/2_adap/2_adap_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 FOFN=$BASE/fofn/1_ubam.fofn
 UBAM=$(head $FOFN -n $SLURM_ARRAY_TASK_ID | tail -n 1)
 READGROUP=${UBAM%_ubam.bam}
@@ -183,14 +180,12 @@ cd $BASE/out/2_adap ; find *_adap.bam > $BASE/fofn/2_adap.fofn
 #SBATCH --time=3-00:00  # D-HH:MM
 #SBATCH --output=log/3_map/3_map_%A_%a.out
 #SBATCH --error=log/3_map/3_map_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 ml BWA/0.7.17-GCC-8.3.0
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 FOFN=$BASE/fofn/2_adap.fofn
 ADAP=$(head $FOFN -n $SLURM_ARRAY_TASK_ID | tail -n 1)
 READGROUP=${ADAP%_adap.bam}
@@ -275,13 +270,11 @@ awk 'BEGIN { FS = "," } ;
 #SBATCH --time=21-00:00  # D-HH:MM
 #SBATCH --output=log/4_dedup/4_dedup_%A_%a.out
 #SBATCH --error=log/4_dedup/4_dedup_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 LIST=$BASE/../0_metadata/lane_merge.csv
 LINES=$(head $LIST -n $SLURM_ARRAY_TASK_ID | tail -n 1)
 IFS="," read LIBRARY LANES <<< $LINES
@@ -323,13 +316,11 @@ cd $BASE/out/4_dedup ; find *_dedup.bam > $BASE/fofn/4_dedup.fofn
 #SBATCH --time=0-01:30  # D-HH:MM
 #SBATCH --output=log/5_cov/5_cov_%A_%a.out
 #SBATCH --error=log/5_cov/5_cov_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 FOFN=$BASE/fofn/4_dedup.fofn
 DEDUP=$(head $FOFN -n $SLURM_ARRAY_TASK_ID | tail -n 1)
 LIBRARY=${DEDUP%_dedup.bam}
@@ -384,13 +375,11 @@ awk '{ sum += $2 } END { print sum / NR }' coverage_phylo2.csv
 #SBATCH --time=21-00:00  # D-HH:MM
 #SBATCH --output=log/6_like/6_like_%A_%a.out
 #SBATCH --error=log/6_like/6_like_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 FOFN=$BASE/fofn/5_cov.fofn
 DEDUP=$(head $FOFN -n $SLURM_ARRAY_TASK_ID | tail -n 1)
 LIBRARY=${DEDUP%_dedup.bam}
@@ -420,13 +409,11 @@ cd $BASE/out/6_like ; find *_g.vcf.gz > $BASE/fofn/6_like.fofn
 #SBATCH --time=21-00:00  # D-HH:MM
 #SBATCH --output=log/7_coho/7_coho_%j.out
 #SBATCH --error=log/7_coho/7_coho_%j.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 FOFN=$BASE/fofn/6_like.fofn
 INPUT=$(cat $FOFN | sed -e 's/^/-V /g')
 
@@ -464,13 +451,11 @@ gatk --java-options "-Xmx120G" \
 #SBATCH --time=21-00:00  # D-HH:MM
 #SBATCH --output=log/8_geno/8.1_geno_%A_%a.out
 #SBATCH --error=log/8_geno/8.1_geno_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 SEQ=($(seq -w 1 24))
 
 gatk --java-options "-Xmx120G" \
@@ -510,13 +495,11 @@ gatk --java-options "-Xmx120G" \
 #SBATCH --time=00-02:00  # D-HH:MM
 #SBATCH --output=log/8_geno/8.2_geno_%j.out
 #SBATCH --error=log/8_geno/8.2_geno_%j.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 RAW=$(find $BASE/out/8_geno/phylo2_rawsnps_LG*.vcf.gz | awk '{ print "-I", $1 }')
 ALL=$(find $BASE/out/8_geno/phylo2_all-indel_LG*.vcf.gz | awk '{ print "-I", $1 }')
 
@@ -573,14 +556,12 @@ shuf -n 3500000 genoqual_phylo2_rawsnps.tsv > genoqual_phylo2_rawsnps_3.5M.tsv
 #SBATCH --time=21-00:00  # D-HH:MM
 #SBATCH --output=log/9_filt/9_filt_%j.out
 #SBATCH --error=log/9_filt/9_filt_%j.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 ml VCFtools/0.1.16-GCC-8.3.0
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 NOSAM=$(find $BASE/out/6_like/*.vcf.gz | wc -l)
 MISS=$((NOSAM / 10))
 
@@ -662,7 +643,7 @@ bcftools stats $BASE/out/8_geno/phylo2_all-indel.vcf.gz > $BASE/stats/snps_phylo
 ### phyps2 dataset (no Serranus outgroups)
 ### ============================================================================
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 
 grep -Ev "tor|tab|tig" fofn/6_like.fofn > fofn/6_phyps2.fofn   # 329 libraries
 
@@ -681,13 +662,11 @@ grep -Ev "tor|tab|tig" fofn/6_like.fofn > fofn/6_phyps2.fofn   # 329 libraries
 #SBATCH --time=21-00:00  # D-HH:MM
 #SBATCH --output=log/7_coho/7p_coho_%j.out
 #SBATCH --error=log/7_coho/7p_coho_%j.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 FOFN=$BASE/fofn/6_phyps2.fofn
 INPUT=$(cat $FOFN | sed -e 's/^/-V /g')
 
@@ -715,13 +694,11 @@ gatk --java-options "-Xmx120G" \
 #SBATCH --time=21-00:00  # D-HH:MM
 #SBATCH --output=log/8_geno/8.1p_geno_%A_%a.out
 #SBATCH --error=log/8_geno/8.1p_geno_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 SEQ=($(seq -w 1 24))
 
 gatk --java-options "-Xmx120G" \
@@ -768,13 +745,11 @@ gatk --java-options "-Xmx120G" \
 #SBATCH --time=00-02:00  # D-HH:MM
 #SBATCH --output=log/8_geno/8.2p_geno_%j.out
 #SBATCH --error=log/8_geno/8.2p_geno_%j.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 ALI=$(find $BASE/out/8_geno/phyps2_all_LG*.vcf.gz | awk '{ print "-I", $1 }')
 ALL=$(find $BASE/out/8_geno/phyps2_all-indel_LG*.vcf.gz | awk '{ print "-I", $1 }')
 RAW=$(find $BASE/out/8_geno/phyps2_rawsnps_LG*.vcf.gz | awk '{ print "-I", $1 }')
@@ -831,14 +806,12 @@ rm $BASE/out/8_geno/phyps2_*LG*
 #SBATCH --time=21-00:00  # D-HH:MM
 #SBATCH --output=log/9_filt/9p_filt_%j.out
 #SBATCH --error=log/9_filt/9p_filt_%j.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3
 ml GATK/4.1.9.0-GCCcore-8.3.0-Java-8
 ml VCFtools/0.1.16-GCC-8.3.0
 
-BASE=/gss/work/haex1482/phylo2/2_genotyping
+BASE=$WORK/phylo2/2_genotyping
 NOSAM=$(find $BASE/out/6_like/*.vcf.gz | wc -l)
 MISS=$((NOSAM / 10))
 
@@ -920,175 +893,3 @@ bcftools stats $BASE/out/8_geno/phyps2_all.vcf.gz > $BASE/out/8_geno/snps_phyps2
 # SN	0	number of others:	0
 # SN	0	number of multiallelic sites:	6385016
 # SN	0	number of multiallelic SNP sites:	659900
-
-
-### ============================================================================
-### Soft filtering and stats
-
-# phylo2_all-indel.vcf.gz: 521554932 sites (windows, mtg trees, DILS)
-# phyps2_all.vcf.gz: 551512072 sites
-
-# phylo2_snpsfilt.vcf.gz: 335 samples, 45000812 sites
-# phyps2_snpsfilt.vcf.gz: 327 samples, 24794034 sites (PCA)
-
-# Filter by minor allele count and physical distance (m2k5)
-vcftools \
-    --gzvcf phylo2_snpsfilt.vcf.gz \
-    --mac 2 \
-    --thin 5000 \
-    --recode \
-    --stdout |
-grep -v -e 'ID=Contig' -e '##GATKCommandLine=' |
-bgzip > phylo2_m2k5.vcf.gz
-#> 110436 sites
-
-vcftools \
-    --gzvcf phyps2_snpsfilt.vcf.gz \
-    --mac 2 \
-    --thin 5000 \
-    --recode \
-    --stdout |
-grep -v -e 'ID=Contig' -e '##GATKCommandLine=' |
-bgzip > phyps_m2k5.vcf.gz
-#> 109968 sites
-
-### ----------------------------------------------------------------------------
-### Filter effect tests
-
-# Missing data
-for i in 0 0.33 0.66 1
-do
-vcftools \
-    --gzvcf /gss/work/haex1482/phylo2/2_genotyping/out/9_filt/phyps2_snpsfilt.vcf.gz \
-    --mac 2 \
-    --max-missing $i
-done
-
-#> 0, 0.33, 0.66: 14612782 out of a possible 24794034 Sites
-#>             1: 14028466 out of a possible 24794034 Sites (96% of above)
-## Sites already filtered by missing genotypes max 10% of samples
-
-# Minor allele count (phylo2)
-for i in 2 4 8
-do
-vcftools \
-    --gzvcf phylo2_snpsfilt.vcf.gz \
-    --mac $i
-done
-
-#> 2: 35478305 out of a possible 45000812 Sites (79%)
-#> 4: 29255378 out of a possible 45000812 Sites (65%)
-#> 8: 17666329 out of a possible 45000812 Sites (39%)
-
-# Minor allele count (phyps2)
-for i in 2 4 8
-do
-vcftools \
-    --gzvcf phyps2_snpsfilt.vcf.gz \
-    --mac $i
-done
-
-#> 2: 14612782 out of a possible 24794034 Sites (59%)
-#> 4: 10768583 out of a possible 24794034 Sites (43%)
-#> 8:  8393043 out of a possible 24794034 Sites (34%)
-
-# Minor allele count and physical distance
-for i in 4 6 8 10
-do
-vcftools \
-    --gzvcf phylo2_snpsfilt.vcf.gz \
-    --mac $i \
-    --thin 5000 \
-    --recode \
-    --stdout |
-grep -v -e 'ID=Contig' -e '##GATKCommandLine=' |
-bgzip > phylo2_m${i}k5.vcf.gz
-done
-
-#> no. of sites ~110 k, independent of mac due to thinning
-
-
-### ----------------------------------------------------------------------------
-### Relabel samples
-
-# Hard-filtered files
-bcftools reheader \
-  -s relabel.txt \
-  --threads 8 \
-  phylo2_snpsfilt.vcf.gz |
-zcat | grep -v -e 'ID=Contig' -e '##GATKCommandLine=' |
-bgzip > phylo2e_snpsfilt2.vcf.gz
-
-bcftools reheader \
-  -s relabel.txt \
-  --threads 8 \
-  phyps2_snpsfilt.vcf.gz |
-zcat | grep -v -e 'ID=Contig' -e '##GATKCommandLine=' |
-bgzip > phyps2e_snpsfilt2.vcf.gz
-
-tabix -p vcf phylo2e_snpsfilt2.vcf.gz
-tabix -p vcf phyps2e_snpsfilt2.vcf.gz
-
-# Soft-filtered files
-bcftools reheader \
-  -s relabel.txt \
-  --threads 8 \
-  phylo2_m2k5.vcf.gz |
-zcat | grep -v -e 'ID=Contig' -e '##GATKCommandLine=' |
-bgzip > phylo2e_m2k5.vcf.gz
-
-bcftools reheader \
-  -s relabel.txt \
-  --threads 8 \
-  phyps2_m2k5.vcf.gz |
-zcat | grep -v -e 'ID=Contig' -e '##GATKCommandLine=' |
-bgzip > phyps2e_m2k5.vcf.gz
-
-tabix -p vcf phylo2e_m2k5.vcf.gz
-tabix -p vcf phyps2e_m2k5.vcf.gz
-
-# Relabel id files
-cp ids_phylo2.txt ids_phylo2e.txt
-cp ids_phyps2.txt ids_phyps2e.txt
-
-while read a b
-do
-  sed -i "s/$a/$b/" ids_phylo2e.txt
-done < relabel.txt
-
-while read a b
-do
-  sed -i "s/$a/$b/" ids_phyps2e.txt
-done < relabel.txt
-
-
-### ----------------------------------------------------------------------------
-### Soft filtering with updated nomenclature
-
-# Physical distance
-#> phylo_m2k5.vcf.gz: 110436 sites (IQ-TREE, SVDQuartets)
-#> phyps_m2k5.vcf.gz: 109968 sites
-
-# Genetic distance, no missing data, phyps2e (Admixture, D-stats, to do: PCA)
-# see dstats_phylo2.sh
-#> phyps2e_m2n1.vcf.gz: 14028466 sites
-#> phyps2e_m2n1l5.vcf.gz: 935941 sites
-
-# Phased
-# see phasing_phylo2.sh
-#> phylo2e_phased.vcf.gz (no filters)
-#> phylo2_phased_mac2.vcf.gz (minor allele count only)
-
-# Phased, with ancestral allele state, no missing data (tskit)
-# see ts_phylo2_aa.sh
-#> phylo2e_..._n1.vcf
-
-# Minor allele count only, phyps2e (GWAS)
-vcftools \
-    --gzvcf phyps2e_snpsfilt.vcf.gz \
-    --mac 2 \
-    --recode \
-    --stdout |
-grep -v -e 'ID=Contig' -e '##GATKCommandLine=' |
-bgzip > phyps2e_m2.vcf.gz
-#> 14612782 sites

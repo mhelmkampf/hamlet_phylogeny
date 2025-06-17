@@ -70,10 +70,10 @@ module load R/4.3.1-foss-2023a
 module load BCFtools/1.18-GCC-13.1.0
 
 # Input the bi-allelic genotyping file (hamlets, no outgroups)
-INPUT_BI=$BASE_DIR/data/gwas/phyps2e_m2.vcf.gz                   
+INPUT_BI=$BASE_DIR/data/gwas/phyps-snp.vcf.gz                   
 
 # Split genotypingg file into 2 for both small & large clades
-bcftools view -Oz -S $BASE_DIR/metadata/large_sample_list.txt \${INPUT_BI} > $BASE_DIR/data/large_phyps2e_m2.vcf.gz
+bcftools view -Oz -S $BASE_DIR/metadata/large_sample_list.txt \${INPUT_BI} > $BASE_DIR/data/large_phyps-snp.vcf.gz
 
 
 EOA
@@ -106,7 +106,7 @@ module load BCFtools/1.18-GCC-13.1.0
 
 # Convert the genotyping file to plink format
 vcftools \
-      --gzvcf $BASE_DIR/data/large_phyps2e_m2.vcf.gz \
+      --gzvcf $BASE_DIR/data/large_phyps-snp.vcf.gz \
       --plink \
       --out $BASE_DIR/outputs/gxp_clades/large/GxP_plink
 
@@ -256,10 +256,10 @@ echo \${win1}
 echo \${step1}
 
 # Run the average over genome window for each set of parameters
-$BASE_DIR/code/gxp_slider.sh \${lm} \${win5} \${step5}
-$BASE_DIR/code/gxp_slider.sh \${lm} \${win1} \${step1}
-$BASE_DIR/code/gxp_slider.sh \${lmm} \${win5} \${step5}
-$BASE_DIR/code/gxp_slider.sh \${lmm} \${win1} \${step1}
+$BASE_DIR/code/aux/gxp_slider.sh \${lm} \${win5} \${step5}
+$BASE_DIR/code/aux/gxp_slider.sh \${lm} \${win1} \${step1}
+$BASE_DIR/code/aux/gxp_slider.sh \${lmm} \${win5} \${step5}
+$BASE_DIR/code/aux/gxp_slider.sh \${lmm} \${win1} \${step1}
 
 
 EOA

@@ -3,7 +3,7 @@
 ### ===============================================================================
 ### R script to create sample groups for MSMC analysis following Hench et al. 2022
 ### edited by Martin Helmkampf to accommodate phylo2 dataset (pops with n > 2 only)
-### relies on functions written by Kosmas Hench
+### relies on functions By Kosmas Hench
 ### ===============================================================================
 
 library(tidyverse)
@@ -36,7 +36,7 @@ set.seed(27678)
 
 
 ### Read in sample list
-samples <- read_tsv(file = "../../metadata/samples_ids.txt", col_names = "label") %>%
+samples <- read_tsv(file = "../../metadata/ids_phylo2e.txt", col_names = "label") %>%
   mutate(spec = str_sub(label, -6, -4),
          geo = str_sub(label, -3, -1)) %>% 
   filter(!(spec %in% c("tor","tab","tig"))

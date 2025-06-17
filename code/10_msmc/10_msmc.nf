@@ -10,13 +10,13 @@ Channel
 // git 8.2
 // Open phased genotype data
 Channel
-    .fromFilePairs("/nfs/data/haex1482/shared/demo/vcf/phylo2e_phased2.vcf.{gz,gz.tbi}")
+    .fromFilePairs("$DATA/shared/demo/vcf/phylo-snp_phased2.vcf.{gz,gz.tbi}")
     .set{ vcf_msmc }
 
 // git 8.3
 // Open unphased genotype data to extract depth information
 Channel
-    .fromFilePairs("/nfs/data/haex1482/shared/demo/vcf/phylo2e_snpsfilt.vcf.{gz,gz.tbi}")
+    .fromFilePairs("$DATA/shared/demo/vcf/phylo2e_snpsfilt.vcf.{gz,gz.tbi}")
     .set{ vcf_depth }
 
 // git 8.4
@@ -59,7 +59,7 @@ depth_ch
 // git 8.6
 // Create channel from bam files and add sample id
 Channel
-    .fromPath("/nfs/data/haex1482/shared/demo/bam/*_dedup.bam")
+    .fromPath("$DATA/shared/demo/bam/*_dedup.bam")
     .map{ file ->
         def key = file.name.toString()
         return tuple(key - "_dedup.bam", file) }
@@ -93,7 +93,7 @@ process split_vcf_by_individual {
     """
     ml GATK/4.4.0.0-GCCcore-13.1.0-Java-17
 
-    ref="/nfs/data/haex1482/shared/demo/ref/Hpue_genome_unmasked_01.fasta"
+    ref="$DATA/shared/demo/ref/Hpue_genome_unmasked_01.fasta"
 
     gatk --java-options "-Xmx10G" \
        SelectVariants \
@@ -123,7 +123,7 @@ process bam_caller {
     ml SAMtools/1.18-GCC-13.1.0
     ml OpenSSL/1.1
 
-    ref="/nfs/data/haex1482/shared/demo/ref/Hpue_genome_unmasked_01.fasta"
+    ref="$DATA/shared/demo/ref/Hpue_genome_unmasked_01.fasta"
 
     samtools index ${bam}
 
@@ -229,7 +229,7 @@ process generate_multihetsep {
 
     generate_multihetsep.py \
         \$smp \
-        --mask=/nfs/data/haex1482/shared/demo/map/Hpue_${lg}.mapmask.bed.txt.gz \
+        --mask=$DATA/shared/demo/map/Hpue_${lg}.mapmask.bed.txt.gz \
         \$seg > msmc_run.${msmc_gr.run}.${msmc_gr.spec}.${msmc_gr.geo}.${lg}.multihetsep.txt
    """
 }
@@ -324,7 +324,7 @@ process generate_multihetsep_cc {
     generate_multihetsep.py \
         \${smp1} \
         \${smp2} \
-         --mask=/nfs/data/haex1482/shared/demo/map/Hpue_${lg}.mapmask.bed.txt.gz \
+         --mask=$DATA/shared/demo/map/Hpue_${lg}.mapmask.bed.txt.gz \
         \${seg1} \
         \${seg2} \
         > cc_run.${run}.${cc_gr.spec_1}-${cc_gr.spec_2}.${cc_gr.contrast_nr}.${cc_gr.geo}.${lg}.multihetsep.txt

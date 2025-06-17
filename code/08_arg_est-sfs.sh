@@ -1,7 +1,8 @@
-### ============================================================================
-### phylo2
-### Inferring genomic history based on ancestral recombination graph (tskit)
-### ============================================================================
+### ================================================================================
+### Radiation with reproductive isolation in the near-absence of phylogenetic signal
+### 08. Ancestral allele inference (est-sfs)
+### By Martin Helmkampf, last edited 2025-06-17
+### ================================================================================
 
 ### Preparations
 
@@ -80,7 +81,7 @@ EOF
 ### ============================================================================
 ### 0. Phasing (Shapeit)
 
-# see $base/3_phasing: phylo2e_phased.vcf.gz
+# see $base/3_phasing: phylo-snp_phased.vcf.gz
 # (no mac, missingness or distance filter)
 
 
@@ -96,8 +97,6 @@ EOF
 #SBATCH --time=00-02   # DD-HH
 #SBATCH --output=/dev/null
 #SBATCH --error=log/sl_%A_%a_aa.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@uni-oldenburg.de
 
 ml VCFtools/0.1.16-GCC-13.1.0
 ml GSL/2.7-GCCcore-13.1.0
@@ -110,7 +109,7 @@ lg=($(seq -w 1 24))
 ### Count alleles
 
 vcftools \
-    --gzvcf $base/4_phasing/4_merge/phylo2e_phased.vcf.gz \
+    --gzvcf $base/4_phasing/4_merge/phylo-snp_phased.vcf.gz \
     --remove 1_counts/ids_tortab.txt \
     --remove 1_counts/ids_tig.txt \
     --chr LG${lg[((SLURM_ARRAY_TASK_ID-1))]} \
@@ -118,14 +117,14 @@ vcftools \
     --stdout | gzip > 1_counts/LG${lg[((SLURM_ARRAY_TASK_ID-1))]}_ingroup.counts.gz
 
 vcftools \
-    --gzvcf $base/4_phasing/4_merge/phylo2e_phased.vcf.gz \
+    --gzvcf $base/4_phasing/4_merge/phylo-snp_phased.vcf.gz \
     --keep 1_counts/ids_tortab.txt \
     --chr LG${lg[((SLURM_ARRAY_TASK_ID-1))]} \
     --counts \
     --stdout | gzip > 1_counts/LG${lg[((SLURM_ARRAY_TASK_ID-1))]}_tortab.counts.gz
 
 vcftools \
-    --gzvcf $base/4_phasing/4_merge/phylo2e_phased.vcf.gz \
+    --gzvcf $base/4_phasing/4_merge/phylo-snp_phased.vcf.gz \
     --keep 1_counts/ids_tig.txt \
     --chr LG${lg[((SLURM_ARRAY_TASK_ID-1))]} \
     --counts \
@@ -154,7 +153,7 @@ est-sfs \
 ### Add AA to VCF
 
 vcftools \
-    --gzvcf $base/4_phasing/4_merge/phylo2e_phased.vcf.gz \
+    --gzvcf $base/4_phasing/4_merge/phylo-snp_phased.vcf.gz \
     --chr LG${lg[((SLURM_ARRAY_TASK_ID-1))]} \
     --recode \
     --stdout > 3_vcf/LG${lg[((SLURM_ARRAY_TASK_ID-1))]}.vcf
@@ -191,27 +190,25 @@ awk -v lg=LG${lg[((SLURM_ARRAY_TASK_ID-1))]} -v l=$l 'NR == 5 { print "##contig=
 
 #SBATCH --job-name=filter
 #SBATCH --partition=rosa_express.p
-#SBATCH --array=1-6
 #SBATCH --nodes=1
 #SBATCH --time=00-02  # DD-HH
 #SBATCH --output=/dev/null
 #SBATCH --error=log/sl_%A_%a_filter.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@uni-oldenburg.de
 
 base=$WORK/phylo2/5_arg
 
 ml VCFtools/0.1.16-GCC-13.1.0
 
-# lg=($(seq -w 1 24))
+for lg in LG01 LG02 LG03 LG04 LG08 LG12
+do
 
-#   vcftools \
-#     --vcf 3_vcf/phylo2e_LG${lg[((SLURM_ARRAY_TASK_ID-1))]}_aal.vcf \
-#     --max-missing 1 \
-#     --recode \
-#     --stdout > 3_vcf/phylo2e_LG${lg[((SLURM_ARRAY_TASK_ID-1))]}_n1.vcf
+vcftools \
+    --vcf $base/3_vcf/phylo2e_${lg}_aal.vcf \
+    --max-missing 1 \
+    --recode \
+    --stdout > 3_vcf/phylo2e_${lg}_n1.vcf
 
-# done
+done
 
 
 ### ----------------------------------------------------------------------------

@@ -1,7 +1,9 @@
-### ============================================================================
-### phylo2
-### Inferring genomic history based on ancestral recombination graph (tskit)
-### ============================================================================
+### ================================================================================
+### Radiation with reproductive isolation in the near-absence of phylogenetic signal
+### 09. Nucleotide diversity and GNN (tskit)
+### Based on code provided in the tsinfer / tskit documentation
+### Adjusted by Martin Helmkampf, last edited 2025-06-17
+### ================================================================================
 
 ### Preparations
 # python ts_samples.py
@@ -318,14 +320,6 @@ for region in l:
     print("Tree sequence `tsd` dated and written to file\n")
 
 
-## ----------------------------------------------------------------------------
-## Tree stats
-
-# LG02_pop: length x, mutations y, trees z
-# LG03_pop: length x, mutations y, trees z
-# LG12_pop: length x, mutations y, trees z
-
-
 ### ============================================================================
 ### 3. Calculate mean nucleotide diversity (tskit)
 
@@ -468,72 +462,3 @@ print(gnn_table.groupby(level = "clade").mean())
 tfile = open("../8_gnn/gnn_phylo2e_LG02_cld_n1.csv", "w")
 tfile.write(gnn_table.to_csv())
 tfile.close()
-
-
-### ============================================================================
-### x. Manipulate trees / further test code
-
-# Return various data and metadata
-print(ts.tables)
-
-# Genetic diversity across genome
-pi = tsd.diversity()
-print(pi)
-#> 0.0013
-
-pi1 = tsd.diversity(sample_sets=tsd.samples(population=1))
-print(pi1)
-#> 0.0007
-
-# Extract genetic data
-for variant in tsd.variants():
-    print(
-        "Variable site", variant.site.id,
-        "at genome position", variant.site.position,
-        ":", [variant.alleles[g] for g in variant.genotypes],
-    )
-
-# Genealogical distance between tips
-branch_diversity = tsd.diversity(mode="branch")
-print("Av. genealogical dist. between pairs of tips is", branch_diversity,  tsd.time_units)
-#> 124018 generations on average
-
-# Returns no. of distinct trees in tree sequence
-tsd.num_trees
-#> 2330
-
-# Returns no. of nodes (genomes)
-tsd.num_nodes
-#> 3065
-
-tsd.samples(population=1)
-
-# Iterate over trees
-for tree in tsd.trees():
-    print(f"Tree {tree.index} covers {tree.interval}")
-    if tree.index >= 4:
-        print("...")
-        break
-print(f"Tree {tsd.last().index} covers {tsd.last().interval}")
-
-# Check coalescence
-import time
-
-elapsed = time.time()
-for tree in tsd.trees():
-    if tree.has_multiple_roots:
-        print("Tree {tree.index} has not coalesced")
-        break
-else:
-    elapsed = time.time() - elapsed
-    print(f"All {tsd.num_trees} trees coalesced")
-    print(f"Checked in {elapsed:.6g} secs")
-
-# Metadata
-print("Metadata for individual 0:", tsd.individual(0).metadata)
-
-# Plot first tree
-first_tree = tsd.first()
-print("Total branch length in first tree is", first_tree.total_branch_length, tsd.time_units)
-print("The first of", tsd.num_trees, "trees is plotted below")
-first_tree.draw_svg(y_axis=True)  # plot the tree: only useful for small trees

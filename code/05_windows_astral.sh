@@ -1,7 +1,8 @@
-### ============================================================================
-### phylo2
-### Phylogenetic reconstruction based on genomic-window approach (ASTRAL)
-### ============================================================================
+### ================================================================================
+### Radiation with reproductive isolation in the near-absence of phylogenetic signal
+### 05. Species tree inference (genomic windows, ASTRAL)
+### By Martin Helmkampf, last edited 2025-06-16
+### ================================================================================
 
 ### Preparations
 
@@ -39,12 +40,10 @@ mkdir 5_astral
 #SBATCH --time=21-00:00  # D-HH:MM
 #SBATCH --output=log/a_extract_%A_%a.out
 #SBATCH --error=log/a_extract_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml VCFtools
 
-BASE=/gss/work/haex1482/phylo2/3_phylogeny/windows/phylo2k
+BASE=$WORK/phylo2/3_phylogeny/windows/phylo2k
 
 PER_TASK=20
 
@@ -61,7 +60,7 @@ do
   end=$(awk -v line="$run" 'BEGIN { FS = "\t" } ; NR==line+1 { print $3 }' $BASE/win_2000x5kb_s27.bed)
   printf -v i "%04d" $run
   vcftools \
-  --gzvcf /gss/work/haex1482/phylo2/2_genotyping/out/8_geno/phylo2_all-indel.vcf.gz \
+  --gzvcf $WORK/phylo2/2_genotyping/out/8_geno/phylo2_all-indel.vcf.gz \
   --chr "$chr" \
   --from-bp "$sta" \
   --to-bp "$end" \
@@ -88,12 +87,10 @@ done
 #SBATCH --time=1-00:00  # D-HH:MM
 #SBATCH --output=log/b_convert_%A_%a.out
 #SBATCH --error=log/b_convert_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml VCFtools
 
-BASE=/gss/work/haex1482/phylo2/3_phylogeny/windows/phylo2k
+BASE=$WORK/phylo2/3_phylogeny/windows/phylo2k
 
 PER_TASK=100
 
@@ -126,12 +123,10 @@ done
 #SBATCH --time=1-00:00  # D-HH:MM
 #SBATCH --output=log/ab_fix_%A_%a.out
 #SBATCH --error=log/ab_fix_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml VCFtools
 
-BASE=/gss/work/haex1482/phylo2/3_phylogeny/windows/phylo2k
+BASE=$WORK/phylo2/3_phylogeny/windows/phylo2k
 
 PER_TASK=1
 
@@ -148,7 +143,7 @@ do
   end=$(awk -v line="$run" 'BEGIN { FS = "\t" } ; NR==line+1 { print $3 }' $BASE/win_2000x5kb_s27.bed)
   printf -v i "%04d" $run
   vcftools \
-  --gzvcf /gss/work/haex1482/phylo2/2_genotyping/out/8_geno/phylo2_all-indel.vcf.gz \
+  --gzvcf $WORK/phylo2/2_genotyping/out/8_geno/phylo2_all-indel.vcf.gz \
   --chr "$chr" \
   --from-bp "$sta" \
   --to-bp "$end" \
@@ -176,12 +171,10 @@ done
 #SBATCH --time=2-00:00  # D-HH:MM
 #SBATCH --output=log/c_align_%A_%a.out
 #SBATCH --error=log/c_align_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
 ml hpc-env/8.3 MAFFT/7.475-GCC-8.3.0-with-extensions
 
-BASE=/gss/work/haex1482/phylo2/3_phylogeny/windows/phylo2k
+BASE=$WORK/phylo2/3_phylogeny/windows/phylo2k
 
 PER_TASK=50
 
@@ -212,10 +205,8 @@ done
 #SBATCH --time=2-00:00  # D-HH:MM
 #SBATCH --output=log/d_iqtree_%A_%a.out
 #SBATCH --error=log/d_iqtree_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
-BASE=/gss/work/haex1482/phylo2/3_phylogeny/windows/phylo2k
+BASE=$WORK/phylo2/3_phylogeny/windows/phylo2k
 
 PER_TASK=10
 
@@ -249,10 +240,8 @@ done
 #SBATCH --time=5-00:00  # D-HH:MM
 #SBATCH --output=log/e_astral_%j.out
 #SBATCH --error=log/e_astral_%j.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
-BASE=/gss/work/haex1482/phylo2/3_phylogeny/windows/phylo2k
+BASE=$WORK/phylo2/3_phylogeny/windows/phylo2k
 
 cat $BASE/4_trees/no/window_*_s27.iqtree.treefile > $BASE/5_astral/phylo2k_s27_genetrees.tre
 
@@ -278,10 +267,8 @@ java -D"java.library.path=/user/haex1482/apps/ASTRAL-MP_v5.15.5/lib" \
 #SBATCH --time=5-00:00  # D-HH:MM
 #SBATCH --output=log/f_iqtree_%A_%a.out
 #SBATCH --error=log/f_iqtree_%A_%a.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
-BASE=/gss/work/haex1482/phylo2/3_phylogeny/windows/phylo2k
+BASE=$WORK/phylo2/3_phylogeny/windows/phylo2k
 
 PER_TASK=10
 
@@ -350,10 +337,8 @@ sort -n -k2 phylo2k_s27_meanufb.tsv | head -n 3
 #SBATCH --time=3-00:00  # D-HH:MM
 #SBATCH --output=log/g_astral_%j.out
 #SBATCH --error=log/g_astral_%j.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@leibniz-zmt.de
 
-BASE=/gss/work/haex1482/phylo2/3_phylogeny/windows/phylo2k
+BASE=$WORK/phylo2/3_phylogeny/windows/phylo2k
 
 java -D"java.library.path=/user/haex1482/apps/ASTRAL-MP_v5.15.5/lib" \
   -jar ~/apps/ASTRAL-MP_v5.15.5/astral.5.15.5.jar \
@@ -396,7 +381,3 @@ done
 #> phylo2k_s27_astral.tre            0.344106
 #> phylo2k_s27_astral_minufb30.tre   0.379738
 #> phylo2k_s27_astral_minufb50.tre   0.310098
-
-## Repeat with branch length (concordance)?
-
-# Note: ufb originally named pp

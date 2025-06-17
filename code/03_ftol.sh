@@ -1,3 +1,9 @@
+### ================================================================================
+### Radiation with reproductive isolation in the near-absence of phylogenetic signal
+### 03. Phylogenetic context (Fish Tree of Life analysis)
+### By Martin Helmkampf, last edited 2025-06-16
+### ================================================================================
+
 ### ============================================================================
 ### phylo2
 ### Phylogenetic reconstruction of Serraninae, including all hamlet species
@@ -21,7 +27,7 @@ mkdir 6_iqtree
 
 
 ### ============================================================================
-### 0. Previous steps taken (PNAS paper / test run)
+### 0. Previous steps taken (see Hench et al. 2022, PNAS)
 
 # Obtain gene partitions in FToL alignment (0_prep/ftol_partitions.bed < partition.bed)
 # Identify genes in reference assembly (0_prep/ftol_coord_Hpue.csv < coord_R24_Hpue_ed.bed)
@@ -43,8 +49,6 @@ mkdir 6_iqtree
 #SBATCH --time=02-00  # DD-HH
 #SBATCH --output=sl_%A_%a_geno.out
 #SBATCH --error=sl_%A_%a_geno.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@uni-oldenburg.de
 
 ml GATK/4.4.0.0-GCCcore-13.1.0-Java-17
 
@@ -118,8 +122,6 @@ $base/0_prep/samples_outgroup.ids
 #SBATCH --time=00-01  # DD-HH
 #SBATCH --output=sl_%A_%a_extract.out
 #SBATCH --error=sl_%A_%a_extract.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@uni-oldenburg.de
 
 ml VCFtools/0.1.16-GCC-13.1.0
 
@@ -261,8 +263,6 @@ done
 #SBATCH --time=01-00  # DD-HH
 #SBATCH --output=sl_%j_iqtree.out
 #SBATCH --error=sl_%j_iqtree.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@uni-oldenburg.de
 
 ml IQ-TREE/2.2.2.7-gompi-2023a
 
@@ -288,27 +288,3 @@ iqtree2 \
 #> 15038
 
 # partition model based on gene-specific model tests
-
-
-## ----------------------------------------------------------------------------
-## x. New versioning
-
-# 6_iqtree/allftol_included ("all"): no tan, ftol samples included, no alignment editing
-# v2: no tan, redundant ftol samples excluded, no alignment editing
-
-
-## ----------------------------------------------------------------------------
-## x. Old versioning (v1)
-
-# v1: no ftol samples excluded, no alignment editing
-
-# v2: as v1, but Gblocks editing of 12s 16s coi cytb
-# cd $base/6_iqtree/v2 && iqtree2 -p $base/5_aln/v2 -B 1000 -T AUTO --prefix r23_v2
-
-# v3: as v1, but coi cytb removed manually from phylo2 Serranus
-# cd $base/6_iqtree/v3 && iqtree2 -p $base/5_aln/v3 -B 1000 -T AUTO --prefix r23_v3
-
-# v4: removed ftol samples in taxa_to_exclude_v4.ids
-# cd $base/6_iqtree/v4 && iqtree2 -p $base/5_aln/v4 -B 1000 -T AUTO --prefix r23_v4
-
-# v5: as v4, but with floflk instead of floarc?

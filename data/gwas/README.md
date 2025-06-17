@@ -1,4 +1,4 @@
-This repository contains the data file used for gwas analysis.
+The dataset required for the GWAS has been uploaded to Dryad (https://datadryad.org) under study accession number xxx:
 
 Content tree:
 <pre>

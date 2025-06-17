@@ -1,7 +1,8 @@
-### ============================================================================
-### phylo2
-### Phylogenetic reconstruction based on concatenated SNPs (IQ-TREE)
-### ============================================================================
+### ================================================================================
+### Radiation with reproductive isolation in the near-absence of phylogenetic signal
+### 04a. Species tree inference (SNPs, IQ-TREE)
+### By Martin Helmkampf, last edited 2025-06-16
+### ================================================================================
 
 ### Preparations
 
@@ -23,30 +24,28 @@ cd $base/3_phylogeny/iqtree
 #SBATCH --time=00-02   # DD-HH
 #SBATCH --output=/dev/null
 #SBATCH --error=sl_%j_fasta.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@uni-oldenburg.de
 
 ml VCFtools/0.1.16-GCC-13.1.0
 
 base=$WORK/phylo2
 
-gzip -cd $base/2_genotyping/out/9_filt/phylo2e_m2k5.vcf.gz \
-    > phylo2e_m2k5.vcf
+gzip -cd $base/2_genotyping/out/9_filt/phylo-snp_5kb.vcf.gz \
+    > phylo-snp_5kb.vcf
 
 vcf-to-tab < \
-    phylo2e_m2k5.vcf |
+    phylo-snp_5kb.vcf |
     sed -e 's/\.\/\./N\/N/g' -e 's/[ACGTN\*]\/\*/N\/N/g' -e 's/\*\/[ACGTN\*]/N\/N/g' \
-    > phylo2e_m2k5.tab
+    > phylo-snp_5kb.tab
 
 perl ~/apps/vcf-tab-to-fasta/vcf_tab_to_fasta_alignment.pl \
-    -i phylo2e_m2k5.tab \
-    > phylo2e_m2k5.fas
+    -i phylo-snp_5kb.tab \
+    > phylo-snp_5kb.fas
 
 # Confirm sequences are of equal length (aligned)
-bioawk -c fastx '{ print $name, length($seq) }' phylo2e_m2k5.fas   # 110436 aligned sites (v1: 109796)
+bioawk -c fastx '{ print $name, length($seq) }' phylo-snp_5kb.fas   # 110436 aligned sites (v1: 109796)
 
-rm phylo2e_m2k5.vcf
-rm phylo2e_m2k5.tab*
+rm phylo-snp_5kb.vcf
+rm phylo-snp_5kb.tab*
 
 
 ### ============================================================================
@@ -55,13 +54,13 @@ rm phylo2e_m2k5.tab*
 ml IQ-TREE/2.2.2.7-gompi-2023a
 
 iqtree2 \
-    -s phylo2e_m2k5.fas \
+    -s phylo-snp_5kb.fas \
     -m GTR+ASC
 
 rm *.ckp.gz
 
-#> +ASC failed due to 27358 invariable sites present (see phylo2e_m2k5.fas.log)
-#> Variable sites printed to phylo2e_m2k5.fas.varsites.phy
+#> +ASC failed due to 27358 invariable sites present (see phylo-snp_5kb.fas.log)
+#> Variable sites printed to phylo-snp_5kb.fas.varsites.phy
 #> 70505 parsimony-informative sites
 
 #!/bin/bash
@@ -74,20 +73,18 @@ rm *.ckp.gz
 #SBATCH --time=00-06   # DD-HH
 #SBATCH --output=sl_%j_iqtree.out
 #SBATCH --error=sl_%j_iqtree.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@uni-oldenburg.de
 
 ml IQ-TREE/2.2.2.7-gompi-2023a
 
 iqtree2 \
-    -s phylo2e_m2k5.fas.varsites.phy \
+    -s phylo-snp_5kb.fas.varsites.phy \
     -m GTR+ASC \
     -allnni \
     -nbest 10 \
     -B 1000 \
     -bnni \
     -T AUTO \
-    --prefix iqtree_phylo2e_m2k5_GTRL_1A
+    --prefix iqtree_phylo-snp_5kb_GTRL_1A
 
 
 ### ============================================================================
@@ -110,14 +107,12 @@ EOF
 #SBATCH --time=03-00   # DD-HH
 #SBATCH --output=sl_%j_lsd.out
 #SBATCH --error=sl_%j_lsd.err
-#SBATCH --mail-type=END,FAIL
-#SBATCH --mail-user=martin.helmkampf@uni-oldenburg.de
 
 # ml IQ-TREE/2.2.2.7-gompi-2023a (run with build v2.2.5)
 
 iqtree2 \
-    -s phylo2e_m2k5.fas.varsites.phy \
-    -te iqtree_phylo2e_m2k5_GTRL_1A.treefile \
+    -s phylo-snp_5kb.fas.varsites.phy \
+    -te iqtree_phylo-snp_5kb_GTRL_1A.treefile \
     -o "PL17_21tigboc,20481tighon" \
     -m GTR+ASC \
     -nt AUTO \
@@ -125,4 +120,4 @@ iqtree2 \
     --date-tip 0 \
     --date-ci 100 \
     --date-options "-u 0" \
-    --prefix lsd_phylo2e_m2k5_GTRL_1A
+    --prefix lsd_phylo-snp_5kb_GTRL_1A

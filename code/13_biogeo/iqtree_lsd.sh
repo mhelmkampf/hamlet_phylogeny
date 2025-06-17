@@ -34,8 +34,8 @@ EOF
 # ml IQ-TREE/2.2.2.7-gompi-2023a (run with build v2.2.5)
 
 iqtree2 \
-    -s phylo2e_m2k5.fas.varsites.phy \
-    -te iqtree_phylo2e_m2k5_GTRL_1A.treefile \
+    -s phylo-snp_5kb.fas.varsites.phy \
+    -te iqtree_phylo-snp_5kb_GTRL_1A.treefile \
     -o "PL17_21tigboc,20481tighon" \
     -m GTR+ASC \
     -nt AUTO \
@@ -43,4 +43,4 @@ iqtree2 \
     --date-tip 0 \
     --date-ci 100 \
     --date-options "-u 0" \
-    --prefix lsd_phylo2e_m2k5_GTRL_1A
+    --prefix lsd_phylo-snp_5kb_GTRL_1A
