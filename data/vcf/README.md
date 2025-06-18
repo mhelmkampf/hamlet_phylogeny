@@ -1,12 +1,11 @@
-The following VCF files have been deposited at Dryad (https://datadryad.org) under study accession number xxx. All dataset contain bi-allelic SNPs only, filtered by missing data (max 10 %) and various quality metrics.
+Please see the accompanying Dryad repository ([DOI 10.5061/dryad.gxd2547z7])(https://doi.org/10.5061/dryad.gxd2547z7) for the following VCF files:
 
-Datasets prefixed 'phyps' were genotyped using hamlet (genus *Hypoplectrus*) sequencing data only, those prefixed 'phylo' were genotyped using hamlet (genus *Hypoplectrus*) and outgroup (genus *Serranus*) sequencing data. Additional filters are described below.
 
-<pre>
-.
-└── phyps2e_m2.vcf      # minor allele count at least 2
-└── phylo2e_m2k5.vcf    # minor allele count at least 2, physical distance between sites at least 5000 bp (used for IQ-TREE)
-└── phyps2e_m2n1l5.vcf  # minor allele count at least 2, no missing data, filtered by linkage disequilibrium (see Methods; used for Admixture)
-└── phylo2e_phased.vcf  # 
-</pre>
+```
+phylo-all_mtg.vcf.gz          # Full mitochondrial genomes in VCF format
+phylo-snp_5kb.vcf.gz          # SNPs filtered by a minimum physical distance of 5000 bp
+phylo-snp_phased.vcf.gz       # Phased SNPs
+phyps-snp_LDfilt.vcf.gz       # SNPs filtered by linkage disequilibrium, no missing data
+phyps-snp.vcf.gz              # SNPs with basic filters only (bi-allelic, MAC ≥ 2)
+```
 
