@@ -37,7 +37,7 @@ plot(dstats_BBAA$p_adjusted, ylab = "adjusted p", xlab = "trio number")
 
 
 ### Declare populations
-samples <- read_tsv("metadata/samples_ids.txt", col_names = "Sample") %>%
+samples <- read_tsv("metadata/ids_phylo2e.txt", col_names = "Sample") %>%
   mutate(Population = str_sub(Sample, -6, -1)) %>%
   filter(!grepl("tor|tab|tig", Population))
 

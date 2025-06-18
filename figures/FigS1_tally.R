@@ -14,7 +14,7 @@ rm(list = ls())
 
 
 ### Read in sample list
-samples <- read_tsv(file = "metadata/samples_ids.txt", col_names = "Sample")
+samples <- read_tsv(file = "metadata/ids_phylo2e.txt", col_names = "Sample")
 
 
 ### Add species / location information

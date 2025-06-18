@@ -28,7 +28,7 @@ world <- ne_countries(scale = "large", returnclass = "sf")
 
 
 ### Read in sample list
-samples <- read_lines("/hamlet_phylogeny/metadata/samples_ids.txt") %>%
+samples <- read_lines("/hamlet_phylogeny/metadata/ids_phylo2e.txt") %>%
            as_tibble() %>% rename(Sample = value) %>%
            mutate(SampleID = str_sub(Sample, end = -7),
                   spec = str_sub(Sample, -6, -4),

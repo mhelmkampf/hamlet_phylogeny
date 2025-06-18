@@ -1,6 +1,6 @@
 # README
 
-This repository contains the data and code used for the manuscript titled **"Radiation with reproductive isolation in the near-absence of phylogenetic signal"** by **Helmkampf, Coulmance, et al.**, published in *Science Advances* (2025). Larger datasets, particularly VCF files, are available in the accompanying **Dryad repository**: [DOI 10.5061/dryad.gxd2547z7](https://doi.org/10.5061/dryad.gxd2547z7).
+This repository contains data and code used for the manuscript titled **"Radiation with reproductive isolation in the near-absence of phylogenetic signal"** by **Helmkampf, Coulmance, et al.**, published in *Science Advances* (2025). Larger datasets, particularly VCF files, are available in the accompanying **Dryad repository**: [DOI 10.5061/dryad.gxd2547z7](https://doi.org/10.5061/dryad.gxd2547z7).
 
 ## Repository Structure
 
@@ -17,30 +17,30 @@ The repository is organized as follows:
 
 ### Code Language and File Extensions
 
-Files in this repository use the following programming languages, as indicated by the file extensions:
+Scripts in this repository use the following programming languages, as indicated by the file extensions:
 - `.sh`  : Shell script
 - `.py`  : Python
 - `.R`   : R
 
 ## Usage Notes
 
-This repository serves to document the **parameters** and **procedures** used in the analyses presented in the paper. However, **re-running the code** may not be straightforward for users on different systems, due to the following reasons:
+This repository serves to document the **parameters and procedures** used in the analyses presented in the paper. However, **re-running the code** may not be straightforward for users on different systems, due to the following reasons:
 
 - The code was developed over several years by different authors and executed on various systems.
-- Code blocks were often run as **sequential Slurm scripts** with **manual checks** between steps, and may not function as fully automated workflows.
+- Code blocks were often run as **sequential Slurm scripts** with manual checks between steps, and were not designed to work as continuously automated workflows.
 
 ### Potential Issues
 
-1. **System-Specific Paths**: Most file paths are system-specific and do not match the file structure of this repository.
-2. **Inconsistent Dataset and File Names**: The dataset and file names have changed multiple times, and older names may still appear in some scripts (see list of common new vs. old names below).
-3. **Sample Renaming**: Several samples have been renamed to reflect updated species/population assignments. Some older names may persist in scripts. See the file `metadata/relabel.txt` for details on these changes.
-4. **Missing Prerequisite Files**: Some prerequisite files may be missing. Please contact the corresponding author at martin.helmkampf@leibniz-zmt.de if you need any missing files.
+1. **Paths**: Most file paths are system-specific and do not match the file structure of this repository.
+2. **Sample Names**: Several samples have been renamed to reflect updated species/population assignments. Older names may persist in some scripts or data files. See the file `metadata/relabel.txt` for details on these changes.
+3. **Dataset and File Names**: Some dataset and file names have changed over the course of the project, and occasionally older names may still appear in some scripts (see table below).
+4. **Prerequisite Files**: Some prerequisite files may be missing. Please contact the corresponding author at martin.helmkampf@leibniz-zmt.de to request any missing files.
 
-## Common File Name Changes
+## Dataset and File Name Changes
 
 Here are some common changes to dataset names throughout the analysis pipeline:
 
-| Old File Name                | New File Name               |
+| Final name                | Working name               |
 |------------------------------|-----------------------------|
 | `phylo-snp_5kb`               | `phylo2e_m2k5`              |
 | `phylo-all_mtg`               | `phylo2_mtg`                |
