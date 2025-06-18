@@ -256,10 +256,10 @@ echo \${win1}
 echo \${step1}
 
 # Run the average over genome window for each set of parameters
-$BASE_DIR/code/aux/gxp_slider.sh \${lm} \${win5} \${step5}
-$BASE_DIR/code/aux/gxp_slider.sh \${lm} \${win1} \${step1}
-$BASE_DIR/code/aux/gxp_slider.sh \${lmm} \${win5} \${step5}
-$BASE_DIR/code/aux/gxp_slider.sh \${lmm} \${win1} \${step1}
+$BASE_DIR/code/gxp_slider.sh \${lm} \${win5} \${step5}
+$BASE_DIR/code/gxp_slider.sh \${lm} \${win1} \${step1}
+$BASE_DIR/code/gxp_slider.sh \${lmm} \${win5} \${step5}
+$BASE_DIR/code/gxp_slider.sh \${lmm} \${win1} \${step1}
 
 
 EOA

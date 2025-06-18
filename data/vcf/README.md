@@ -1,4 +1,4 @@
-Please see the accompanying Dryad repository ([DOI 10.5061/dryad.gxd2547z7])(https://doi.org/10.5061/dryad.gxd2547z7) for the following VCF files:
+Please see the accompanying Dryad repository [DOI 10.5061/dryad.gxd2547z7](https://doi.org/10.5061/dryad.gxd2547z7) for the following VCF files:
 
 
 ```
