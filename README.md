@@ -1,6 +1,6 @@
-# README
+# README -- Code and data package
 
-This repository contains data and code used for the manuscript titled **"Radiation with reproductive isolation in the near-absence of phylogenetic signal"** by **Helmkampf, Coulmance, et al.**, published in *Science Advances* (2025). Larger datasets, particularly VCF files, are available in the accompanying **Dryad repository**: [DOI 10.5061/dryad.gxd2547z7](https://doi.org/10.5061/dryad.gxd2547z7).
+This repository contains data and code used for the manuscript titled **"Radiation with reproductive isolation in the near-absence of phylogenetic signal"** by Helmkampf, Coulmance, et al., published in *Science Advances* (2025). Larger datasets, particularly VCF files, are available in the accompanying **Dryad repository**: [DOI 10.5061/dryad.gxd2547z7](https://doi.org/10.5061/dryad.gxd2547z7). The raw sequencing data can be found at the [European Nucleotide Archive](https://www.ebi.ac.uk/ena/browser/home) under the project accession numbers PRJEB75494, PRJEB74501, and PRJEB76552.
 
 ## Repository Structure
 
@@ -34,9 +34,9 @@ This repository serves to document the **parameters and procedures** used in the
 1. **Paths**: Most file paths are system-specific and do not match the file structure of this repository.
 2. **Sample Names**: Several samples have been renamed to reflect updated species/population assignments. Older names may persist in some scripts or data files. See the file `metadata/relabel.txt` for details on these changes.
 3. **Dataset and File Names**: Some dataset and file names have changed over the course of the project, and occasionally older names may still appear in some scripts (see table below).
-4. **Prerequisite Files**: Some prerequisite files may be missing. Please contact the corresponding author at martin.helmkampf@leibniz-zmt.de to request any missing files.
+4. **Prerequisite Files**: Providing prerequisite files may have been overlooked in individual cases. Please contact the corresponding author to request any missing files.
 
-## Dataset and File Name Changes
+### Dataset and File Name Changes
 
 Here are some common changes to dataset names throughout the analysis pipeline:
 
@@ -50,4 +50,4 @@ Here are some common changes to dataset names throughout the analysis pipeline:
 
 ## Acknowledgments
 
-If you encounter any issues or require additional information about the dataset or code, please contact the corresponding author.
+If you encounter any issues or require additional information about the dataset or code, please contact the corresponding author (martin.helmkampf@leibniz-zmt.de).
